@@ -1,5 +1,5 @@
 Rutas a crear:
-
+IMPORTANTE, PROCUREN TRABAJAR SIEMPRE EN UNA RAMA APARTE DE DEVELOP, DE LO CONTRARIO NO APARECE EL MERGE REQUEST
 De momento tenemos estas rutas, si se agregan más o si alguna es obsoleta, avisar en el chat para estar todos en la misma linea
 
 Rutas de front{
@@ -18,3 +18,5 @@ Rutas de front{
 
 Puede ser que en el back ocupemos más rutas, hay que procurar tenerlas listadas por que son bastantes
 de esta manera podemos ayudar a agilizar el trabajo
+
+
