@@ -5,4 +5,4 @@ Rutas a crear:
 /homepage/:user
 /homepage/:user/:img
 /homepage/search/:user
-prueba
+pruebaasdas
