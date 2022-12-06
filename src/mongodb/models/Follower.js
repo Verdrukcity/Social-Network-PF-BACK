@@ -3,10 +3,10 @@ const { Profile } = require('./Profile')
 
 const FOLLOWER = new Schema({
     isPremium: Boolean,
-    profileId: {
+    profileId: [{
         type: Schema.Types.ObjectId,
         ref: Profile
-    }
+    }]
 })
 
 const Follower = model('Follower', FOLLOWER)

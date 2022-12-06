@@ -1,13 +1,23 @@
 const {model, Schema} = require('mongoose');
-const { Profile } = require('./Profile');
+const { Comment } = require('./Comment');
 
 const POST = new Schema({
-    text: String,
-    multimedia: String,
-    profile: {
+    text: {
+        type : String,
+        required : true
+    },
+    multimedia:{ 
+       type : String,
+       required : true
+    },
+    multimedia_id :{
+        type : String,
+        required : true
+    },
+    commentId: [{
         type: Schema.Types.ObjectId,
-        ref: Profile
-    }
+        ref: Comment
+    }]
 });
 
 const Post = model('Post', POST);
