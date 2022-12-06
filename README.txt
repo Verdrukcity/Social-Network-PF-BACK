@@ -16,7 +16,5 @@ Rutas de front{
 /reply/:user/cash
 }
 
-Puede ser que en el back ocupemos más rutas, hay que procurar tenerlas listadas por que son bastantes
-de esta manera podemos ayudar a agilizar el trabajo
-
+Hello, world!
 
