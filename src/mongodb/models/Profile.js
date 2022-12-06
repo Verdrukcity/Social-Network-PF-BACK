@@ -1,4 +1,7 @@
 const { model, Schema } = require('mongoose');
+const { Follow } = require('./Follow');
+const { Follower } = require('./Follower');
+const { Post } = require('./Post');
 
 const PROFILE = new Schema({
 
@@ -14,11 +17,12 @@ const PROFILE = new Schema({
         ref : Post
     }],
     follow :{
-        type : Array
+        type : Array,
+        ref: Follow
     },
     followers : [{
         type : Schema.Types.ObjectId,
-        ref : follower
+        ref : Follower
     }]
 });
 
