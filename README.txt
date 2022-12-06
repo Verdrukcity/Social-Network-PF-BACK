@@ -14,7 +14,9 @@ Rutas de front{
 /reply/:user/followers
 /reply/:user/follows
 /reply/:user/cash
+/cd
+srdgf
 }
-pc2
 
+.
 asdasd
