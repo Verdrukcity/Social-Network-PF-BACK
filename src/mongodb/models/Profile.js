@@ -5,13 +5,35 @@ const { Post } = require('./Post');
 
 const PROFILE = new Schema({
 
-    Email : String,
-    user_Name : String,
-    name : String,
-    lastname : String,
-    image_profil : String,
-    birthdate : String,
-    country : String,
+    Email : {
+        type : String,
+        required: true,
+        unique: true
+    },
+    user_Name :{
+       type : String,
+       required : true
+    },
+    name : {
+        type : String,
+        required : true
+     },
+    lastname : {
+        type : String,
+        required : true
+     },
+    image_profil : {
+        type : String,
+        required : true
+     },
+    birthdate : {
+        type : String,
+        required : true
+     },
+    country : {
+        type : String,
+        required : true
+     },
     content : [{
         type : Schema.Types.ObjectId,
         ref : Post
