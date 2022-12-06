@@ -4,14 +4,14 @@ const { Profile } = require('./Profile');
 
 const COMMENT = new Schema({
     text: String,
-    profileId: {
+    profileId: [{
         type: Schema.Types.ObjectId,
-        ref: Profile
-    },
-    postId:{
+        ref: Profile 
+    }],
+    postId:[{
         type: Schema.Types.ObjectId,
         ref: Post
-    }
+    }]
 });
 
 const Comment = model('Comment', COMMENT);

@@ -3,10 +3,10 @@ const { Post } = require('./Post');
 
 const LIKE = new Schema({
     numLikes: Number,
-    postId: {
+    postId: [{
         type: Schema.Types.ObjectId,
         ref: Post
-    }
+    }]
 });
 
 const Like = model('Like', LIKE);
