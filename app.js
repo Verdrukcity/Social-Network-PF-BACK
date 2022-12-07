@@ -25,13 +25,7 @@ app.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
   abortOnLimit: true,
 }));
-//cloudinary config
-Cloudinary.config({ 
-  cloud_name: process.env.CLOUDINARY_NAME, 
-  api_key: process.env.CLOUDINARY_API, 
-  api_secret: process.env.CLOUDINARY_SECRET_APY,
-  secure: true
-});
+
 //Routes
 app.use('/', indexRouter);
 // catch 404 and forward to error handler
