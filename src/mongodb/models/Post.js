@@ -4,15 +4,18 @@ const { Comment } = require('./Comment');
 const POST = new Schema({
     text: {
         type : String,
-        required : true
+
     },
     multimedia:{ 
        type : String,
-       required : true
+       
     },
     multimedia_id :{
         type : String,
-        required : true
+        
+    },
+    type:{
+        type : String,
     },
     commentId: [{
         type: Schema.Types.ObjectId,
