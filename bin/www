@@ -36,6 +36,9 @@ mongoose.connect(mongodb)
 })
 .catch(err => console.log(err.message))
 
+mongoose.connection.on("open", ()=> console.log("DB conections success"))
+
+//↑ shows if the conection was succesfull
 /**
  * Normalize a port into a number, string, or false.
  */
