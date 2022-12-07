@@ -7,7 +7,14 @@ const PROFILE = new Schema({
 
     Email : {
         type : String,
-        required: true,
+        required: function validateEmail(){
+            //chequea email valido
+            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.Email)){
+                return (this.Email)
+            }
+            else throw new Error('Must enter a valid email')
+        }
+        ,
         unique: true
     },
     user_Name :{
@@ -28,7 +35,25 @@ const PROFILE = new Schema({
      },
     birthdate : {
         type : String,
-        required : true
+        required : function(){
+            //split al string que llega
+            var date = this.birthdate.split('')
+            
+            //slice para tener solo el año
+            date = date.slice(11,15).join('')
+            
+            //paso a integer
+            date = parseInt(date)
+            
+            //fecha actual
+            let actualDate = new Date().getFullYear()
+            
+            //si da menor a 18 es porque es menor de edad
+            if (actualDate - date < 18){
+                throw new Error('Debe ser mayor de edad')
+            }
+            return this.birthdate
+        }
      },
     country : {
         type : String,
