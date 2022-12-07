@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var indexRouterCreate = require('../c-createPost/router/index');
+var indexRouterCreate = require('../Post/router/index');
 
 
 
