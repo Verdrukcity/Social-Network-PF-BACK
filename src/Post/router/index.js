@@ -2,6 +2,8 @@ const { Router } = require('express');
 
 const routerCreate = require('./create.router')
 
+const routerDetail = require('./detail.router')
+
 const router = Router();
 
 // Configurar los routers
@@ -12,6 +14,9 @@ const router = Router();
  * lo envio a la ruta del create
  */
 router.use('/create',routerCreate)
+
+//ruta de detail
+router.use('/detail',routerDetail)
 
 
 
