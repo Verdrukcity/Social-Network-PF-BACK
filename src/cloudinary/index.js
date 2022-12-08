@@ -1,13 +1,13 @@
 const cloudinary = require('cloudinary').v2 //instancio cloudinary
 require('dotenv').config()
 
-const {cloudinary_Name, cloudinary_Apikey, cloudinary_secret} = process.env
+const {CLOUDINARY_NAME, CLOUDINARY_API_KEY, CLOUDINARY_SECRET} = process.env
 
 //configuro la cuenta de cloudinary
 cloudinary.config({ 
-    cloud_name: cloudinary_Name, 
-    api_key: cloudinary_Apikey, 
-    api_secret: cloudinary_secret,
+    cloud_name: CLOUDINARY_NAME, 
+    api_key: CLOUDINARY_API_KEY, 
+    api_secret: CLOUDINARY_SECRET,
     secure: true
   })
 
