@@ -51,6 +51,22 @@ module.exports = {
             throw Error( {error: error.message} )
         }
 
+    },
+    detailPost: async(req, res)=>{
+        try{
+            //extraemos el id del post por params
+            const {postId} = req.params
+            //buscamos el post con el id requerido
+            const searchedPost = await Post.findById(postId)
+
+            //si es null, no existe tal post
+            if (searchedPost == null) throw new Error('No pudimos encontrar el post que buscas')
+            //de lo contrario, devolvemos el post obtenido
+            else res.json(searchedPost) 
+        }
+        catch(error){
+            res.status(400).send(error.message)
+        }
     }
 
 }

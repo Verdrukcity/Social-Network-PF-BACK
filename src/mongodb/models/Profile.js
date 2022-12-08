@@ -2,18 +2,13 @@ const { model, Schema } = require('mongoose');
 const { Follow } = require('./Follow');
 const { Follower } = require('./Follower');
 const { Post } = require('./Post');
+const {validateEmail, validateAge} = require('./validations/index')
 
 const PROFILE = new Schema({
 
-    Email : {
+    email : {
         type : String,
-        required: function validateEmail(){
-            //chequea email valido
-            if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.Email)){
-                return (this.Email)
-            }
-            else throw new Error('Must enter a valid email')
-        }
+        required: function () {return validateEmail(this.email)}
         ,
         unique: true
     },
@@ -35,25 +30,7 @@ const PROFILE = new Schema({
      },
     birthdate : {
         type : String,
-        required : function(){
-            //split al string que llega
-            var date = this.birthdate.split('')
-            
-            //slice para tener solo el año
-            date = date.slice(11,15).join('')
-            
-            //paso a integer
-            date = parseInt(date)
-            
-            //fecha actual
-            let actualDate = new Date().getFullYear()
-            
-            //si da menor a 18 es porque es menor de edad
-            if (actualDate - date < 18){
-                throw new Error('Debe ser mayor de edad')
-            }
-            return this.birthdate
-        }
+        required : function () {return validateAge(this.birthdate)}
      },
     country : {
         type : String,
