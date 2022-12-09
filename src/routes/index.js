@@ -1,16 +1,13 @@
-const express = require('express')
-const router = express.Router()
-const post = require('../Post/router/index.js')
-const categories = require('../Category/router/index.js')
+var express = require('express');
+var router = express.Router();
+var indexRouterCreate = require('../Post/router/index.js');
+var categoriesRoute = require("../Categories/router/index")
+
 
 /**
  * distribución de rutas
  */
-router.use('/', post)
-router.use('/', categories)
-
-/* router.get('/', function (req, res, next) {
-  res.send('Hello, world! Aquí armamos nuestras rutas 1')
-}) */
+router.use('/',indexRouterCreate)
+router.use('/', categoriesRoute)
 
 module.exports = router
