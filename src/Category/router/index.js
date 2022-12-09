@@ -1,13 +1,13 @@
 const { Router } = require('express')
 
+const getCategories = require('./get.router.js')
+
 const router = Router()
 
 /**
  * ruta principal de las categorías
  */
 
-router.get('/categories', function (req, res, next) {
-  res.send('Aquí van nuestras rutas de categories')
-})
+router.use('/categories', getCategories)
 
 module.exports = router
