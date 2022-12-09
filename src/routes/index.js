@@ -5,14 +5,9 @@ var categoriesRoute = require("../Categories/router/index")
 
 
 /**
- * ruta de creacion de post 
+ * distribución de rutas
  */
 router.use('/',indexRouterCreate)
 router.use('/', categoriesRoute)
 
-router.get('/', function(req, res, next) {
-  res.send("Hello, world! Aqui armamos nuestras rutas 1");
-});
-
-
-module.exports = router;
+module.exports = router
