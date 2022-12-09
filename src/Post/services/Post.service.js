@@ -27,7 +27,7 @@ module.exports = {
 
             if (multimedia || text) {
 
-                const IMG = createImg(multimedia.tempFilePath)   //we upload the image or the video and save the information
+                const IMG = await createImg(multimedia.tempFilePath)   //we upload the image or the video and save the information
 
                 const data = {
                     text,
