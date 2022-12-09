@@ -15,6 +15,12 @@ router.get("/", async (req, res)=>{
    }
    
 });
+/**
+ * crea una categoria
+ * tipo : post
+ * ruta : /category
+ * requiere {text} por body
+ */
 router.post("/" ,async(req, res)=>{
     try {
        await makeCategoryes(req, res);
@@ -22,6 +28,12 @@ router.post("/" ,async(req, res)=>{
         res.status(400).json(error.message)
     }
 });
+/**
+ * borra uno, varios o todos los post
+ * tipo : delete
+ * ruta : /category
+ * requiere de {id} o de manera opcional { deleteMany, category}
+ */
 router.delete("/", async (req, res)=>{
     try {
         await deleteCategory(req, res)
@@ -29,6 +41,12 @@ router.delete("/", async (req, res)=>{
         res.status(400).json(error.message)
     }
 });
+/**
+ * actualiza una categoria
+ * tipo : put
+ * ruta : /category
+ * requiere de {id, text}
+ */
 router.put("/", async (req, res) =>{
     try {
         await updateCategory(req, res);
