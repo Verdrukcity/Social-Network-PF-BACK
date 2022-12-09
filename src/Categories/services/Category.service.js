@@ -27,7 +27,7 @@ module.exports = {
      },
      deleteCategory: async (req, res) =>{
         try {
-            const {id, deleteMany} = req.body;
+            const {id, deleteMany, category} = req.body;
             if(id && !deleteMany){
                const deleted = await Category.deleteOne({_id: id});
               return res.status(200).json({
@@ -36,7 +36,7 @@ module.exports = {
                })
             }
              if(id && deleteMany) {
-                const deleted = await Category.deleteMany({_id: id});
+                const deleted = await Category.deleteMany({category: category});
               return  res.status(200).json({
                  message: "Categorias eliminadas correctamente",
                  data: deleted
