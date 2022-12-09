@@ -1,14 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var indexRouterCreate = require('../Post/router/index.js');
-
+var categoriesRoute = require("../Categories/router/index")
 
 
 /**
  * ruta de creacion de post 
  */
 router.use('/',indexRouterCreate)
-
+router.use('/', categoriesRoute)
 
 router.get('/', function(req, res, next) {
   res.send("Hello, world! Aqui armamos nuestras rutas 1");
