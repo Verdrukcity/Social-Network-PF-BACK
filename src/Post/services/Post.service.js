@@ -1,6 +1,7 @@
 
 const { createImg } = require("../../cloudinary/index.js");
-const { Post } = require("../../mongodb/models/Post.js")
+const { Post } = require("../../mongodb/models/Post.js");
+const { Profile } = require("../../mongodb/models/Profile.js");
 
 
 
@@ -24,10 +25,11 @@ module.exports = {
         try {
             const { multimedia } = req.files;     //require the multimedia file and the text from the body
             const { text, type } = req.body;
+            const { id } = req.params
 
             if (multimedia || text) {
 
-                const IMG = await createImg(multimedia.tempFilePath)   //we upload the image or the video and save the information
+                const IMG = await createImg(multimedia)   //we upload the image or the video and save the information
 
                 const data = {
                     text,
@@ -38,7 +40,9 @@ module.exports = {
 
                 //We save the post on the DB
                 const POST = await Post.create(data)
-                
+                const newProfile = await Profile.findById(id)
+                newProfile.content.push(POST._id);
+                newProfile.save()
                 res.status(200).json({
                     message: "los datos se guardaron correctamente",
                     data: POST

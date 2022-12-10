@@ -28,6 +28,9 @@ const PROFILE = new Schema({
         type : String,
         required : true
      },
+     image_publi_id :{
+        type : String
+     },
     birthdate : {
         type : String,
         required : function () {return validateAge(this.birthdate)}
