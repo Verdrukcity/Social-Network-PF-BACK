@@ -1,35 +1,34 @@
 const express = require('express')
 const router = express.Router()
-const { makePost, findPost } = require('../services/Post.service.js');
+const { createUser, users } = require('../services/User.service')
 
-
-//aqui manejo las rutas del create
+//aqui manejo las rutas del user
 
 /**
- * trae todos los post o los seleccionados
+ * trae todos los profile o los seleccionados
  * tipo : get
- * ruta : /create
+ * ruta : /user
  * no requiere de parametro alguno pero puede ocupar Query
  */
 
 //                                      Search all || search by text || search by type
 router.get("/", async (req, res) => {
     try {
-        findPost(req, res)
+         users(req, res)
     } catch (error) {
         res.status(400).json(error.message)
     }
 })
 /**
- * Genera un nuevo post
- * tipo : post
- * ruta : /create
- * requiere del id del ususario 
+ * Genera un nuevo profile
+ * tipo : profile
+ * ruta : /user
+ * no requiere de parametro alguno 
  */
 
-router.post('/:id', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        makePost(req, res)
+        createUser(req, res)
 
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -37,7 +36,5 @@ router.post('/:id', async (req, res) => {
 
 })
 
+
 module.exports = router
-
-
-
