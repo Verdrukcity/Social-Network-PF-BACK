@@ -8,5 +8,5 @@ const user = require('../User/router/index.js')
  */
 router.use('/',indexRouterCreate)
 router.use('/', categoriesRoute)
-
+router.use('/', user)
 module.exports = router
