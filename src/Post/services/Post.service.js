@@ -1,4 +1,5 @@
 
+const { json } = require("body-parser");
 const { createImg } = require("../../cloudinary/index.js");
 const { Post } = require("../../mongodb/models/Post.js");
 const { Profile } = require("../../mongodb/models/Profile.js");
@@ -30,26 +31,26 @@ module.exports = {
             if (multimedia && text  && category) {
 
                     const IMG = await createImg(multimedia); 
-                
                   //we upload the image or the video and save the information
                 const data = {
                     text,
-                    category,
+                    category: category,
                     multimedia: IMG.url ? IMG.url : "",
                     multimedia_id: IMG.public_id ? IMG.public_id : ""
                 };
 
                 //We save the post on the DB
                 const POST = await Post.create(data);
-                if(id){
+
                     const newProfile = await Profile.findById(id);
                 await newProfile.content.push(POST._id);
                 await newProfile.save();
-                }
+               
                 
                 res.status(200).json({
                     message: "los datos se guardaron correctamente",
-                    data: POST
+                    data: POST,
+                    profile: newProfile
                 });
             } else {
                 throw Error({ message: "no se suministraron los datos requeridos" })
@@ -75,6 +76,6 @@ module.exports = {
         catch(error){
             res.status(400).send(error.message)
         }
-    }
+    },
 
 }
