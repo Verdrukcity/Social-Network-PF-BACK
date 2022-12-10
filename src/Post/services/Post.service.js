@@ -24,35 +24,39 @@ module.exports = {
     makePost: async (req, res) => {
         try {
             const { multimedia } = req.files;     //require the multimedia file and the text from the body
-            const { text, type } = req.body;
+            const { text, category } = req.body;
             const { id } = req.params
 
-            if (multimedia || text) {
+            if (multimedia && text  && category) {
 
-                const IMG = await createImg(multimedia)   //we upload the image or the video and save the information
-
+                    const IMG = await createImg(multimedia); 
+                
+                  //we upload the image or the video and save the information
                 const data = {
                     text,
-                    type,
+                    category,
                     multimedia: IMG.url ? IMG.url : "",
                     multimedia_id: IMG.public_id ? IMG.public_id : ""
-                }
+                };
 
                 //We save the post on the DB
-                const POST = await Post.create(data)
-                const newProfile = await Profile.findById(id)
-                newProfile.content.push(POST._id);
-                newProfile.save()
+                const POST = await Post.create(data);
+                if(id){
+                    const newProfile = await Profile.findById(id);
+                await newProfile.content.push(POST._id);
+                await newProfile.save();
+                }
+                
                 res.status(200).json({
                     message: "los datos se guardaron correctamente",
                     data: POST
-                })
+                });
             } else {
                 throw Error({ message: "no se suministraron los datos requeridos" })
             }
 
         } catch (error) {
-            throw Error( {error: error.message} )
+            throw Error(  error.message )
         }
 
     },

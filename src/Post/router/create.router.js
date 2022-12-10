@@ -15,7 +15,7 @@ const { makePost, findPost } = require('../services/Post.service.js');
 //                                      Search all || search by text || search by type
 router.get("/", async (req, res) => {
     try {
-        findPost(req, res)
+       await findPost(req, res)
     } catch (error) {
         res.status(400).json(error.message)
     }
@@ -29,7 +29,12 @@ router.get("/", async (req, res) => {
 
 router.post('/:id', async (req, res) => {
     try {
-        makePost(req, res)
+        const {id} = req.params;
+        if(id){
+          await makePost(req, res)  
+        } else{
+            res.status(400).send({error: "no se suminstro un id"})
+        }
 
     } catch (error) {
         res.status(400).json({ message: error.message })

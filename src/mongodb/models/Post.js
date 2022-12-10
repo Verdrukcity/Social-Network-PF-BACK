@@ -14,7 +14,7 @@ const POST = new Schema({
         type : String,
         
     },
-    type:{
+    category:{
         type : String,
     },
     commentId: [{
