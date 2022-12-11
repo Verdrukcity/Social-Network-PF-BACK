@@ -33,7 +33,7 @@ router.post('/:id', async (req, res) => {
         if(id){
           await makePost(req, res)  
         } else{
-            res.status(400).send({error: "no se suminstro un id"})
+            res.status(400).json({error: "no se suminstro un id"})
         }
 
     } catch (error) {
