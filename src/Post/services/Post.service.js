@@ -11,10 +11,10 @@ module.exports = {
         try {
             const { type, text, } = req.query
             if (type || text) {
-                const FIND_POSTS = await Post.find({ type, text, })
+                const FIND_POSTS = await Post.find({ type, text, }).populate(['userId', 'commentId'])
                 res.json(FIND_POSTS)
             } else {
-                const POSTS = await Post.find({})
+                const POSTS = await Post.find({}).populate(['userId', 'commentId'])
                 res.json({message:"todo ok " , data:POSTS})
             }
         } catch (error) {
