@@ -14,7 +14,7 @@ module.exports = {
                 const FIND_POSTS = await Post.find({ type, text, }).populate(['userId', 'commentId'])
                 res.json(FIND_POSTS)
             } else {
-                const POSTS = await Post.find({}).populate(['userId', 'commentId'])
+                const POSTS = await Post.find({}).populate(['userId', 'commentId']);
                 res.json({message:"todo ok " , data:POSTS})
             }
         } catch (error) {
