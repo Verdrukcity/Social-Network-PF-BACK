@@ -27,11 +27,8 @@ module.exports = {
                     const userData = await Profile.findById(uId);       //find the profile
                     INFO.push({
                         ...iterator._doc,
-                        userData: {
-                            _id: userData._id,
-                            user_Name: userData.user_Name,
-                            image_profil: userData.image_profil,
-                        }
+                        userData
+                      
                     })
                 }
                 res.json({message:"todo ok " , data:INFO})
