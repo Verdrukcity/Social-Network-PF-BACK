@@ -68,8 +68,7 @@ module.exports = {
                 
                 res.status(200).json({
                     message: "los datos se guardaron correctamente",
-                    data: {...POST._doc,
-                    category: JSON.parse(POST.category)},
+                    data: {...POST._doc},
                     profile: {
                         _id:newProfile._id,
                         user_Name: newProfile.user_Name,
