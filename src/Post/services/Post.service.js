@@ -1,6 +1,5 @@
 
-const { json } = require("body-parser");
-const { createImg } = require("../../cloudinary/index.js");
+const { createImg, delImg } = require("../../cloudinary/index.js");
 const { Post } = require("../../mongodb/models/Post.js");
 const { Profile } = require("../../mongodb/models/Profile.js");
 
@@ -34,6 +33,7 @@ module.exports = {
                   //we upload the image or the video and save the information
                 const data = {
                     text,
+                    userId : id,
                     category: category,
                     multimedia: IMG.url ? IMG.url : "",
                     multimedia_id: IMG.public_id ? IMG.public_id : ""
@@ -78,5 +78,16 @@ module.exports = {
             res.status(400).send(error.message)
         }
     },
+    deletePost : async (req, res)=>{
+        try {
+            const { id } = req.params;
+            const postDelete  = await Post.findByIdAndDelete(id);
+           if(!postDelete) throw new Error({message : 'No existe comment'})
+              delImg(postDelete.multimedia_id)
+              res.status(200).json({data : 'se elimino correctamente'})
 
+        } catch (error) {
+            res.status(400).send(error.message)
+        }
+    }
 }
