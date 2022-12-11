@@ -21,3 +21,5 @@ router.use('/detailComment',routerDetail);
 
 
 module.exports = router;
+
+module.exports = router
