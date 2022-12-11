@@ -53,26 +53,30 @@ router.get('/:postId',async (req, res)=>{
                 },
             {$project : {userId:0, commentId : 0, profile : {content : 0}, usuarios : {content : 0}}}
     ]);
-    // if(!p.length) p = Post.findById(postId);
-
-    const arr = {
-        userId : p[0].profile,
-        post : {
-            _id : p[0]._id,
-            text : p[0].text,
-            multimedia : p[0].multimedia,
-            multimedia_id : p[0].multimedia_id,
-            category : p[0].category
-        },
-        comment : p.map((x) =>{
-            return{
-                comment : x.comentarios && x.comentarios,
-                user : x.usuarios && x.usuarios
-            }
-        })
-
+    if(p.length){
+        const arr = {
+            userId : p[0].profile,
+            post : {
+                _id : p[0]._id,
+                text : p[0].text,
+                multimedia : p[0].multimedia,
+                multimedia_id : p[0].multimedia_id,
+                category : p[0].category
+            },
+            comment : p.map((x) =>{
+                return{
+                    comment : x.comentarios && x.comentarios,
+                    user : x.usuarios && x.usuarios
+                }
+            })    
+        }
+        return res.status(200).json(arr)
     }
-       res.status(200).json(arr)
+
+    if(!p.length){
+        p = await Post.findById(postId).populate(['userId', 'commentId']);
+           res.status(200).json(p)
+     } 
     }
     catch(error){
         res.status(400).json(error.message)
