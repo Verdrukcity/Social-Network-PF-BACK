@@ -19,7 +19,7 @@ module.exports = {
                 res.json({message:"todo ok " , data:POSTS})
             }
         } catch (error) {
-            throw Error({error:error.message})
+            throw Error(error.message)
         }
     },
     makePost: async (req, res) => {
@@ -47,9 +47,10 @@ module.exports = {
                 await newProfile.save();
                
                 
-                res.status(200).json({
+                res.status(200).send({
                     message: "los datos se guardaron correctamente",
-                    data: POST,
+                    data: {...POST._doc,
+                    category: JSON.parse(category)},
                     profile: newProfile
                 });
             } else {
