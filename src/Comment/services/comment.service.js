@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 // agregamos los servicios que queremos exportar
 module.exports = {
-    comments: async (req, res) => {
+    comments: async (req, res) => { // muestra todo los comment 
         try {
             const FIND_COMMENT = await Comment.find()
                 res.json(FIND_COMMENT)
@@ -13,7 +13,7 @@ module.exports = {
         }
     },
 
-    createComment : async (req, res)=>{
+    createComment : async (req, res)=>{ // crea el comment
        try {
        const { id } = req.params;
        const { text, profileId} = req.body;
@@ -33,12 +33,26 @@ module.exports = {
        }
     },
 
-    detailComment :async (req, res)=>{
+    detailComment :async (req, res)=>{ // muestra el detalle del comment
          try {
             const newComment = await Comment.findById(req.params.id).populate('profileId')
                 res.status(200).json(newComment)           
          } catch (error) {
             res.status(400).send({message : error.message})
          }
+    },
+    deleteComment : async (req, res)=>{   //borrra el comment
+       try {
+        const { id } = req.params;
+         const dropComment = await Comment.findByIdAndDelete(id);
+         res.status(200).json(dropComment)
+       } catch (error) {
+        
+       }
     }
 }
+
+
+
+
+

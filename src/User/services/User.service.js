@@ -21,8 +21,29 @@ module.exports = {
 
     users :async (req, res)=>{
        try {
-        const newPerfil = await Profile.find()
-        res.status(200).json(newPerfil)
+            const newPerfil = await Profile.aggregate([
+                {
+                    $match : req.query   // puede buscar por query la refrencia, si no tiene qury llegaran todos los profiles
+                },{                       // la ruta es user - no puede tener la ruta sucia si no va a buscar  los profile
+                    $lookup : {           // si la ruta llega asi - /user?name='', manda un error ojoooo
+                        from : 'posts',
+                        let : {image : '$content'},
+                        pipeline : [
+                                {
+                                    $match : {
+                                        $expr : {
+                                           $in : ['$_id', '$$image'] 
+                                        }
+                                    }
+                                }
+                        ],
+                        as : 'posts'
+                    }
+                },{
+                    $project : { content : 0}
+                }]);
+                if(!newPerfil.length) throw Error({message : 'No existe profil con esos parametros'})
+            res.status(200).json(newPerfil)
        } catch (error) {
         res.status(400).send({message : error.message})
        }
@@ -41,8 +62,10 @@ module.exports = {
                  from : 'posts',
                  localField : 'content',
                  foreignField : '_id',
-                 as : 'post',
+                 as : 'contents',
              }
+         },{
+            $project : {content : 0}
          }])
          
          res.status(200).json(newProfile)

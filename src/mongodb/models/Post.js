@@ -16,7 +16,7 @@ const POST = new Schema({
         
     },
     category:{
-        type : String,
+        type : Array,
     },
     userId : {
            type : Schema.Types.ObjectId,

@@ -2,7 +2,7 @@ const { model, Schema } = require('mongoose');
 const { Follow } = require('./Follow');
 const { Follower } = require('./Follower');
 const { Post } = require('./Post');
-const {validateEmail, validateAge} = require('./validations/index')
+const {validateEmail, validateAge} = require('./validations/index');
 
 const PROFILE = new Schema({
 
