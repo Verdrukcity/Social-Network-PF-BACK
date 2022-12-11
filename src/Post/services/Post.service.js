@@ -2,6 +2,7 @@
 const { createImg, delImg } = require("../../cloudinary/index.js");
 const { Post } = require("../../mongodb/models/Post.js");
 const { Profile } = require("../../mongodb/models/Profile.js");
+const mongoose = require("mongoose")
 
 
 
@@ -9,13 +10,31 @@ const { Profile } = require("../../mongodb/models/Profile.js");
 module.exports = {
     findPost: async (req, res) => {
         try {
-            const { type, text, } = req.query
-            if (type || text) {
-                const FIND_POSTS = await Post.find({ type, text, }).populate(['userId', 'commentId'])
+            const { category, text, } = req.query;
+            const{id} = req.body;
+            if (category || text) {
+                const FIND_POSTS = await Post.find({ type, text, })
                 res.json(FIND_POSTS)
-            } else {
-                const POSTS = await Post.find({}).populate(['userId', 'commentId']);
-                res.json({message:"todo ok " , data:POSTS})
+            } 
+            if(id){
+                const POST = await Post.findById(id);
+                res.json(POST)
+            } else{
+                const POSTS = await Post.find({})
+                const INFO = []
+                for (const iterator of POSTS) {                             //use a for method, because .map doasen't work
+                    const uId = mongoose.Types.ObjectId(iterator.userId);   //conver the id on something that mongoores recognice
+                    const userData = await Profile.findById(uId);       //find the profile
+                    INFO.push({
+                        ...iterator._doc,
+                        userData: {
+                            _id: userData._id,
+                            user_Name: userData.user_Name,
+                            image_profil: userData.image_profil,
+                        }
+                    })
+                }
+                res.json({message:"todo ok " , data:INFO})
             }
         } catch (error) {
             throw Error(error.message)
@@ -50,11 +69,15 @@ module.exports = {
                 res.status(200).json({
                     message: "los datos se guardaron correctamente",
                     data: {...POST._doc,
-                    category: category},
-                    profile: newProfile
+                    category: typeof category === "string"? JSON.parse(category): category},
+                    profile: {
+                        _id:newProfile._id,
+                        user_Name: newProfile.user_Name,
+                        image_profil: newProfile.image_profil
+                    }
                 });
             } else {
-                throw Error({ message: "no se suministraron los datos requeridos" })
+                throw Error( "no se suministraron los datos requeridos" )
             }
 
         } catch (error) {
@@ -82,12 +105,12 @@ module.exports = {
         try {
             const { id } = req.params;
             const postDelete  = await Post.findByIdAndDelete(id);
-           if(!postDelete) throw new Error({message : 'No existe comment'})
+           if(!postDelete) throw new Error('No existe comment')
               delImg(postDelete.multimedia_id)
               res.status(200).json({data : 'se elimino correctamente'})
 
         } catch (error) {
-            res.status(400).send(error.message)
+            res.status(400).json(error.message)
         }
     }
 }

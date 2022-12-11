@@ -10,12 +10,12 @@ module.exports = {
                 if(
                     !email || !user_Name  || !name || !lastname ||
                       !birthdate || !country
-                  ) throw Error({message : 'Faltan parametros'})
+                  ) throw Error('Faltan parametros')
                   
               const newProfil = await Profile.create(req.body)
               res.status(200).json(newProfil)
         } catch (error) {
-            res.status(400).send({message : error.message})
+            res.status(400).send( error.message)
         }
     },
 
@@ -42,10 +42,10 @@ module.exports = {
                 },{
                     $project : { content : 0}
                 }]);
-                if(!newPerfil.length) throw Error({message : 'No existe profil con esos parametros'})
+                if(!newPerfil.length) throw Error('No existe profil con esos parametros')
             res.status(200).json(newPerfil)
        } catch (error) {
-        res.status(400).send({message : error.message})
+        throw Error(error.message)
        }
     },
     userId : async (req, res) =>{
@@ -70,7 +70,7 @@ module.exports = {
          
          res.status(200).json(newProfile)
        } catch (error) {
-        res.status(400).send({message : error.message})
+        throw Error( error.message)
        }
     }
 }
