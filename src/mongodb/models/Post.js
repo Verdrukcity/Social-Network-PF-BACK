@@ -1,5 +1,6 @@
 const {model, Schema} = require('mongoose');
 const { Comment } = require('./Comment');
+const { Profile } = require('./Profile');
 
 const POST = new Schema({
     text: {
@@ -14,8 +15,12 @@ const POST = new Schema({
         type : String,
         
     },
-    type:{
+    category:{
         type : String,
+    },
+    userId : {
+           type : Schema.Types.ObjectId,
+           ref : Profile
     },
     commentId: [{
         type: Schema.Types.ObjectId,

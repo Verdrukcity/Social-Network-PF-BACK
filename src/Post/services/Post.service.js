@@ -1,6 +1,8 @@
 
+const { json } = require("body-parser");
 const { createImg } = require("../../cloudinary/index.js");
-const { Post } = require("../../mongodb/models/Post.js")
+const { Post } = require("../../mongodb/models/Post.js");
+const { Profile } = require("../../mongodb/models/Profile.js");
 
 
 
@@ -17,38 +19,46 @@ module.exports = {
                 res.json({message:"todo ok " , data:POSTS})
             }
         } catch (error) {
-            throw Error({error:error.message})
+            throw Error(error.message)
         }
     },
     makePost: async (req, res) => {
         try {
             const { multimedia } = req.files;     //require the multimedia file and the text from the body
-            const { text, type } = req.body;
+            const { text, category } = req.body;
+            const { id } = req.params
 
-            if (multimedia || text) {
+            if (multimedia && text  && category) {
 
-                const IMG = await createImg(multimedia.tempFilePath)   //we upload the image or the video and save the information
-
+                    const IMG = await createImg(multimedia); 
+                  //we upload the image or the video and save the information
                 const data = {
                     text,
-                    type,
+                    category: category,
                     multimedia: IMG.url ? IMG.url : "",
                     multimedia_id: IMG.public_id ? IMG.public_id : ""
-                }
+                };
 
                 //We save the post on the DB
-                const POST = await Post.create(data)
+                const POST = await Post.create(data);
+
+                    const newProfile = await Profile.findById(id);
+                await newProfile.content.push(POST._id);
+                await newProfile.save();
+               
                 
-                res.status(200).json({
+                res.status(200).send({
                     message: "los datos se guardaron correctamente",
-                    data: POST
-                })
+                    data: {...POST._doc,
+                    category: JSON.parse(category)},
+                    profile: newProfile
+                });
             } else {
                 throw Error({ message: "no se suministraron los datos requeridos" })
             }
 
         } catch (error) {
-            throw Error( {error: error.message} )
+            throw Error(  error.message )
         }
 
     },
@@ -67,6 +77,6 @@ module.exports = {
         catch(error){
             res.status(400).send(error.message)
         }
-    }
+    },
 
 }

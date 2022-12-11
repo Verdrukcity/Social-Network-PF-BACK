@@ -1,21 +1,20 @@
 const express = require('express')
 const router = express.Router()
-const { makePost, findPost } = require('../services/Post.service.js');
+const { comments, createComment } = require('../services/Comment.service')
 
-
-//aqui manejo las rutas del create
+//aqui manejo las rutas del comment
 
 /**
  * trae todos los post o los seleccionados
  * tipo : get
- * ruta : /create
+ * ruta : /comment
  * no requiere de parametro alguno pero puede ocupar Query
  */
 
 //                                      Search all || search by text || search by type
 router.get("/", async (req, res) => {
     try {
-       await findPost(req, res)
+        comments(req, res)
     } catch (error) {
         res.status(400).json(error.message)
     }
@@ -23,18 +22,13 @@ router.get("/", async (req, res) => {
 /**
  * Genera un nuevo post
  * tipo : post
- * ruta : /create
- * requiere del id del ususario 
+ * ruta : /comment
+ * requiere del id de la post
  */
 
 router.post('/:id', async (req, res) => {
     try {
-        const {id} = req.params;
-        if(id){
-          await makePost(req, res)  
-        } else{
-            res.status(400).send({error: "no se suminstro un id"})
-        }
+        createComment(req, res)
 
     } catch (error) {
         res.status(400).json({ message: error.message })
@@ -43,6 +37,5 @@ router.post('/:id', async (req, res) => {
 })
 
 module.exports = router
-
 
 

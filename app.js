@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var fileUpload = require("express-fileupload")
 var indexRouter = require('./src/routes/index');
-const Cloudinary = require("cloudinary").v2;
 
 var app = express();
 
@@ -21,15 +20,14 @@ app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin','*');
     res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
     res.setHeader('Access-Control-Allow-Methods','Content-Type','Authorization');
+    res.setHeader
     next(); 
 })
 app.use(express.static(path.join(__dirname, 'public')));
 //↓Middleware for upload files
 app.use(fileUpload({
   useTempFiles : true,
-  tempFileDir : '/tmp/',
-  limits: { fileSize: 50 * 1024 * 1024 },
-  abortOnLimit: true,
+  tempFileDir : './tmp/'
 }));
 
 //Routes

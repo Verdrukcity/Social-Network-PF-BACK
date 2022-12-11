@@ -21,16 +21,35 @@ rutas de Back
     },
     post:{
         funcionalidad: añade una categoria,
-        requeriere: {text} por body,
+        requiere: {id}, {multimedia} y {text} por body,
     },
     delete:{
         funcionalidad: elimina una categoria por id,
-        requeriere: un {id} y opcional {deleteMany, category} para eliminar varios
+        requiere: un {id} y opcional {deleteMany, category} para eliminar varios
     }
     put:{
         funcionalidad: remplaza una categoria,
-        requeriere: un {id} y un {text}
+        requiere: un {id} y un {text}
     }
 
 }
-asdasd
+/detail/:postId {
+    get:{
+        funcionalidad: trae el detalle de un post,
+        requiere: {postId}
+    }
+}
+/user{
+    get:{
+        funcionalidad: busca todos los usuarios
+        requiere: nada
+    }
+
+}
+/userDetail/:id{
+    get: {
+        funcionalidad: busca un usuario y trae todos los datos que se puedan necesitar,
+        requiere: un {id} de usuario
+    }
+}
+
