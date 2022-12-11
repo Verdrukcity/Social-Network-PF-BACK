@@ -47,10 +47,10 @@ module.exports = {
                 await newProfile.save();
                
                 
-                res.status(200).send({
+                res.status(200).json({
                     message: "los datos se guardaron correctamente",
                     data: {...POST._doc,
-                    category: JSON.parse(category)},
+                    category: category},
                     profile: newProfile
                 });
             } else {
