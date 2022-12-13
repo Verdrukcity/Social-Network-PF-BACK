@@ -3,10 +3,8 @@ const { Mapa } = require('../../mongodb/models/mapas.js');
 
 const llenar = async () =>{
      const m = await maper();
-     m.map(async (x) =>{
-       await Mapa.create(x)
-     });
-}
+       await Mapa.insertMany(m)
+};
 
 module.exports ={
     createMaps : async (req, res)=>{

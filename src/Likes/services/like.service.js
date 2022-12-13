@@ -31,37 +31,40 @@ module.exports = {
             if (!usersLiked) throw Error({ message: Message_Error_Add_Like });
 
             const newPost = await Post.findById(id).populate("likes");
+            const otroPost = await Post.findById(id);
             if (!newPost) throw Error({ message: Message_Error_Add_Like });
 
-            //const findUser = await Profile.findById(usersLiked)
-            //if(!findUser) throw Error({message: "User not found"})
+            const findUser = await Profile.findById(usersLiked)
+            if(!findUser) throw Error({message: "User not found"})
 
-            /*console.log(newPost);
-
-            if (newPost.likes.length === 0) {
+            if (!newPost.likes.length) {
                 const newLike = await Like.create(req.body);
-                newPost.likes.push(newLike._id);
-                newPost.save();
-                res.status(200).json({ message: Message_Add_Like });
-            }
+                otroPost.likes.push(newLike._id);
+                otroPost.save()
 
-            const likeMap = newPost.likes.map(async (like) => {
-                const findUser = await Profile.findById(like.usersLiked);
-                console.log(like, "user");
-                if (!findUser) {
+              return  res.status(200).json({ message: Message_Add_Like });
+            }
+            // console.log(like.usersLiked.equals(findUser._id));
+
+            const likeMap = newPost.likes.find((like) => {
+                // const findUser = await Profile.findById(like.usersLiked);
+                return findUser._id.equals(like.usersLiked) === true
+            });
+
+            if(!likeMap){
                     const newLike = await Like.create(req.body);
-                    newPost.likes.push(newLike._id);
-                    newPost.save();
-                    return "Like add";
-                } else if (findUser) {
-                    const deleteLike = await Like.findByIdAndDelete(like._id);
-                    return "Like delete";
+                    otroPost.likes.push(newLike._id);
+                    otroPost.save();
+                    console.log({gurda : 'ok'})
+                    return res.send("Like add");
+                } else {
+                         await Like.findByIdAndDelete(likeMap._id);
+                    console.log({borra : 'delete'})
+                    return res.send("Like delete");
                 }
                 //return findUser
-            });
-            */
 
-            res.status(200).json({ message: Message_Add_Like });
+            // res.status(200).json({ message: Message_Add_Like });
         } catch (error) {
             res.status(400).send({ message: error.message });
         }
