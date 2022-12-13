@@ -1,6 +1,14 @@
 const { Comment } = require('../../mongodb/models/Comment.js')
 const { Post } = require('../../mongodb/models/Post.js')
 const mongoose = require('mongoose');
+const{
+    Message_Incomplete_Create_Comentary ,
+    Message_Error_Create_Comentary ,
+    Message_Create_Comentary,
+    
+
+} = require( "../../Message")
+
 
 // agregamos los servicios que queremos exportar
 module.exports = {
@@ -17,16 +25,16 @@ module.exports = {
        try {
        const { id } = req.params;
        const { text, profileId} = req.body;
-       if(!text || !profileId) throw Error({message : 'Faltan parametros'})
+       if(!text || !profileId) throw Error({message : Message_Incomplete_Create_Comentary })
 
        const newPost = await Post.findById(id);
-        if(!newPost) throw Error({message : 'No existe Post al que quire comentar'});
+        if(!newPost) throw Error({message : Message_Error_Create_Comentary });
 
          const newCommen = await Comment.create(req.body)
           newPost.commentId.push(newCommen._id);
            newPost.save();
 
-            res.status(200).json({data : 'se creo correctamente el commentario'})
+            res.status(200).json({data : Message_Create_Comentary})
 
        } catch (error) {
         res.status(400).send({message : error.message})

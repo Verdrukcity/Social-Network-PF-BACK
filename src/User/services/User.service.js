@@ -1,5 +1,11 @@
 const { Profile } = require("../../mongodb/models/Profile");
 const mongoose = require('mongoose')
+const {
+    Message_Error_Create_User,
+    Message_Error_Find_User
+
+} = require( "../../Message")
+
 module.exports = {
     createUser : async (req, res)=>{
         try {
@@ -10,7 +16,7 @@ module.exports = {
                 if(
                     !email || !user_Name  || !name || !lastname ||
                       !birthdate || !country
-                  ) throw Error('Faltan parametros')
+                  ) throw Error(Message_Error_Create_User)
                   
               const newProfil = await Profile.create(req.body)
               res.status(200).json(newProfil)
@@ -42,7 +48,7 @@ module.exports = {
                 },{
                     $project : { content : 0}
                 }]);
-                if(!newPerfil.length) throw Error('No existe profil con esos parametros')
+                if(!newPerfil.length) throw Error(Message_Error_Find_User)
             res.status(200).json(newPerfil)
        } catch (error) {
         throw Error(error.message)

@@ -3,6 +3,10 @@ const { Post } = require("../../mongodb/models/Post.js");
 const { Profile } = require("../../mongodb/models/Profile.js");
 const mongoose = require("mongoose")
 
+const {
+    Message_Create_Post,
+    Message_Error_Delete_Post,
+} = require( "../../Message");
 
 
 // agregamos los servicios que queremos exportar
@@ -63,7 +67,7 @@ module.exports = {
                
                 
                 res.status(200).json({
-                    message: "los datos se guardaron correctamente",
+                    message: Message_Create_Post,
                     data: {...POST._doc},
                     profile: {
                         _id:newProfile._id,
@@ -72,7 +76,7 @@ module.exports = {
                     }
                 });
             } else {
-                throw Error( "no se suministraron los datos requeridos" )
+                throw Error( Message_Imcomplete_Create_Post )
             }
 
         } catch (error) {
@@ -206,9 +210,9 @@ module.exports = {
         try {
             const { id } = req.params;
             const postDelete  = await Post.findByIdAndDelete(id);
-           if(!postDelete) throw new Error('No existe comment')
+           if(!postDelete) throw new Error(Message_Error_Delete_Post)
               delImg(postDelete.multimedia_id)
-              res.status(200).json({data : 'se elimino correctamente'})
+              res.status(200).json({data : Message_Delete_Post})
 
         } catch (error) {
             res.status(400).json(error.message)
