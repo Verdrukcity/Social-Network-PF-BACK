@@ -101,7 +101,7 @@ module.exports = {
          
          res.status(200).send(newProfile[0])
        } catch (error) {
-        console.log(error.message)
+        throw Error( error.message)
        }
     }
 }
