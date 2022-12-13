@@ -1,10 +1,11 @@
-var express = require('express');
-var router = express.Router();
-var indexRouterCreate = require('../Post/router/index.js');
-var categoriesRoute = require("../Categories/router/index");
+const express = require('express');
+const router = express.Router();
+const indexRouterCreate = require('../Post/router/index.js');
+const categoriesRoute = require("../Categories/router/index");
 const user = require('../User/router/index.js');
 const comment = require('../Comment/router/index.js');
-const MAPA = require('../mapas/router/index.js')
+const MAPA = require('../mapas/router/index.js');
+const Like = require('../Likes/route/index')
 /**
  * distribución de rutas
  */
@@ -13,5 +14,6 @@ router.use('/', categoriesRoute);
 router.use('/', user);
 router.use('/', comment);
 router.use('/', MAPA)
+router.use('/', Like )
 
 module.exports = router
