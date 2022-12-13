@@ -1,5 +1,8 @@
 const express = require('express')
 const router = express.Router()
+const {
+    Message_Error_Create_Post
+} = require( "../../Message");
 const { makePost, findPost } = require('../services/Post.service.js');
 
 
@@ -33,7 +36,7 @@ router.post('/:id', async (req, res) => {
         if(id){
           await makePost(req, res)  
         } else{
-            res.status(400).json({error: "no se suminstro un id"})
+            res.status(400).json({error: Message_Error_Create_Post})
         }
 
     } catch (error) {

@@ -1,10 +1,22 @@
 const {Category} = require("../../mongodb/models/Category.js")
+const{
+Message_Create_Category ,
+Message_Find_Category,
+Message_Error_Create_Category,
+Message_Find_Categorys ,
+Message_Delete_Category ,
+Message_Delete_Categorys ,
+Message_Error_Delete_Categorys ,
+Message_Update_Categorys,
+Message_Error_Update_Categorys,
+Message_Error_Incomplete,
+} = require( "../../Message")
 
 module.exports = {
     findCategoryes : async(req, res)=>{
         try {
             const CATEGORYS = await Category.find({});
-            res.status(200).json({message: "todo salio ok", data: CATEGORYS})
+            res.status(200).json({message: Message_Find_Categorys, data: CATEGORYS})
         } catch (error) {
             throw new Error (error.message)
         }
@@ -16,9 +28,9 @@ module.exports = {
                 const CATEGORY = await Category.create({
                 category : text,
             })
-                res.json({message: "Categoria creada correctamente", data: CATEGORY})
+                res.json({message: Message_Create_Category, data: CATEGORY})
             }else{
-                throw new Error ("No se suminstraron los datos requeridos")
+                throw new Error (Message_Error_Create_Category)
             }
             
         } catch (error) {
@@ -31,18 +43,18 @@ module.exports = {
             if(id && !deleteMany){
                const deleted = await Category.deleteOne({_id: id});
               return res.status(200).json({
-                message: "Categoria eliminada correctamente",
+                message: Message_Delete_Category,
                 data: deleted
                })
             }
              if(id && deleteMany) {
                 const deleted = await Category.deleteMany({category: category});
               return  res.status(200).json({
-                 message: "Categorias eliminadas correctamente",
+                 message: Message_Delete_Categorys ,
                  data: deleted
                 })
             } else{
-                throw new Error("no se suministro el id")
+                throw new Error(Message_Error_Delete_Categorys)
             }
             
         } catch (error) {
@@ -56,12 +68,12 @@ module.exports = {
                 const UPDATE = await Category.updateOne({_id:id}, {category: text})
                 const newCategory = await Category.findById(id)
                 res.status(200).json({
-                    message: "category updated",
+                    message: Message_Update_Categorys,
                     data: UPDATE,
                     newCategory: newCategory
                 })
             } else{
-                throw new Error("faltan los datos id o text")
+                throw new Error(Message_Error_Update_Categorys)
             }
         } catch (error) {
             throw new Error(error.message)
