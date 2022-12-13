@@ -11,9 +11,13 @@ const llenar = async () =>{
 module.exports ={
     createMaps : async (req, res)=>{
         try {
-            // await llenar() si se borra de nuevo solo hacer el llamado de nuevo descomentando
+            const porSiBorranLaDb = await Mapa.find();
+            if(!porSiBorranLaDb.length) await llenar();
+
             const mapas = await Mapa.find();
+            
             res.status(200).json({message : 'listo', data : mapas});
+        
         } catch (error) {
             res.status(400).json({message : error.message})
         }

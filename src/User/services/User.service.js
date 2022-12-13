@@ -1,5 +1,11 @@
 const { Profile } = require("../../mongodb/models/Profile");
 const mongoose = require('mongoose')
+const {
+    Message_Error_Create_User,
+    Message_Error_Find_User
+
+} = require( "../../Message")
+
 module.exports = {
     createUser : async (req, res)=>{
         try {
@@ -10,7 +16,7 @@ module.exports = {
                 if(
                     !email || !user_Name  || !name || !lastname ||
                       !birthdate || !country
-                  ) throw Error('Faltan parametros')
+                  ) throw Error(Message_Error_Create_User)
                   
               const newProfil = await Profile.create(req.body)
               res.status(200).json(newProfil)
@@ -24,8 +30,20 @@ module.exports = {
             const newPerfil = await Profile.aggregate([
                 {
                     $match : req.query   // puede buscar por query la refrencia, si no tiene qury llegaran todos los profiles
-                },{                       // la ruta es user - no puede tener la ruta sucia si no va a buscar  los profile
-                    $lookup : {           // si la ruta llega asi - /user?name='', manda un error ojoooo
+                },                       // la ruta es user - no puede tener la ruta sucia si no va a buscar  los profile
+                {                        // si la ruta llega asi - /user?name='', manda un error ojoooo
+                    $lookup :{
+                        from : 'mapas',
+                        localField : 'country',
+                        foreignField : '_id',
+                        as : 'country',
+                    }
+                },
+                {
+                    $unwind : '$country'
+                },       
+                {                       
+                    $lookup : {          
                         from : 'posts',
                         let : {image : '$content'},
                         pipeline : [
@@ -42,7 +60,7 @@ module.exports = {
                 },{
                     $project : { content : 0}
                 }]);
-                if(!newPerfil.length) throw Error('No existe profil con esos parametros')
+                if(!newPerfil.length) throw Error(Message_Error_Find_User)
             res.status(200).json(newPerfil)
        } catch (error) {
         throw Error(error.message)
@@ -57,6 +75,17 @@ module.exports = {
          {
              $match : { "_id" : id1}
          },
+         {
+            $lookup :{
+                from : 'mapas',
+                localField : 'country',
+                foreignField : '_id',
+                as : 'country',
+            }
+        },
+        {
+            $unwind : '$country'
+        },
          {
              $lookup :{
                  from : 'posts',

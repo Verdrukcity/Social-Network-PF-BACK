@@ -33,8 +33,9 @@ const maper = async () =>{
   const p = m.data;
   const tiempo = p.map(x =>{
      return {
-        name : x.name.official,
-        image : x.flags[1]
+        name : x.name.common,
+        image : x.flags[1],
+        areacode : `${x.idd.root ? x.idd.root : "No area code"}${x.idd.suffixes ? x.idd.suffixes.length > 1 ? "" : x.idd.suffixes[0]  : ""}`
      }
   })
   return tiempo
