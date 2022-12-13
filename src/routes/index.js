@@ -4,6 +4,7 @@ var indexRouterCreate = require('../Post/router/index.js');
 var categoriesRoute = require("../Categories/router/index");
 const user = require('../User/router/index.js');
 const comment = require('../Comment/router/index.js');
+const MAPA = require('../mapas/router/index.js')
 /**
  * distribución de rutas
  */
@@ -11,4 +12,6 @@ router.use('/',indexRouterCreate);
 router.use('/', categoriesRoute);
 router.use('/', user);
 router.use('/', comment);
+router.use('/', MAPA)
+
 module.exports = router
