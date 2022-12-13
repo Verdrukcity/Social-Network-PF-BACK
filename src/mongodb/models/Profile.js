@@ -1,6 +1,7 @@
 const { model, Schema } = require('mongoose');
 const { Follow } = require('./Follow');
 const { Follower } = require('./Follower');
+const { Mapa } = require('./mapas');
 const { Post } = require('./Post');
 const {validateEmail, validateAge} = require('./validations/index');
 
@@ -36,7 +37,8 @@ const PROFILE = new Schema({
         required : function () {return validateAge(this.birthdate)}
      },
     country : {
-        type : String,
+        type : Schema.Types.ObjectId,
+        ref : Mapa,
         required : true
      },
     content : [{
