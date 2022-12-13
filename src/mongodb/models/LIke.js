@@ -1,18 +1,13 @@
-const {model, Schema} = require('mongoose');
-const { Post } = require('./Post');
-const { Profile } = require('./Profile');
+const { model, Schema } = require("mongoose");
+const { Post } = require("./Post");
+const { Profile } = require("./Profile");
 
 const LIKE = new Schema({
-    numLikes: Number,
-    postId: [{
+    usersLiked: {
         type: Schema.Types.ObjectId,
-        ref: Post
-    }],
-    usersLiked: [{
-        type: Schema.Types.ObjectId,
-        ref: Profile
-    }]
+        ref: Profile,
+    },
 });
 
-const Like = model('Like', LIKE);
-module.exports = {Like};
+const Like = model("Like", LIKE);
+module.exports = { Like };
