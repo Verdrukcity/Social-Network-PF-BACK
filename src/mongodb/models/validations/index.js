@@ -33,7 +33,7 @@ const maper = async () =>{
   const p = m.data;
   const tiempo = p.map(x =>{
      return {
-        name : x.name.official,
+        name : x.name.common,
         image : x.flags[1]
      }
   })
