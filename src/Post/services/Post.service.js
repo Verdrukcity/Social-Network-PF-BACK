@@ -91,59 +91,6 @@ module.exports = {
     detailPost: async (req, res) => {
         const { postId } = req.params;
         try {
-            // //extraemos el id del post por params
-            // const {postId} = req.params
-            // //buscamos el post con el id requerido
-            // const searchedPost = await Post.findById(postId)
-
-            // //si es null, no existe tal post
-            // if (searchedPost == null) throw new Error('No pudimos encontrar el post que buscas')
-            // //de lo contrario, devolvemos el post obtenido
-            // else res.json(searchedPost)
-            //const id = mongoose.Types.ObjectId(postId);
-            //     let p = await Post.aggregate([
-            //         {
-            //         $match : {"_id" : id}
-            //     },
-            //     {
-            //         $lookup : {
-            //             from: "profiles",
-            //             localField : 'userId',
-            //             foreignField : '_id',
-            //             as : 'profile'
-            //         }
-            //     },
-            //     {
-            //                 $graphLookup: {
-            //                     from: "comments",
-            //                     startWith: "$commentId",
-            //                     connectFromField: "_id",
-            //                     connectToField: "_id",
-            //                     maxDepth: 2,
-            //                     depthField: "numConnections",
-            //                     as: "comentarios"
-            //                 }
-            //             },
-            //             {
-            //                 $unwind : '$comentarios'
-            //             },
-            //             {
-            //                 $graphLookup: {
-            //                     from: "profiles",
-            //                     startWith: "$comentarios.profileId",
-            //                     connectFromField: "_id",
-            //                     connectToField: "_id",
-            //                     maxDepth: 2,
-            //                     depthField: "numConnections",
-            //                     as: "usuarios"
-            //                 }
-            //             },
-            //             {
-            //                 $unwind : '$usuarios'
-            //             },
-            //         {$project : {userId:0, commentId : 0, profile : {content : 0}, usuarios : {content : 0}}}
-            // ]);
-
             //join de la info de usuario con el userId contenido en el post
             //el segundo parametro le indica que solamente me traiga el nombre, imagen e ID
             let post = await Post.findById(postId).populate("userId", {
@@ -175,38 +122,14 @@ module.exports = {
                     multimedia: post.multimedia,
                     multimedia_id: post.multimedia_id,
                     category: post.category,
-                    likes: post.likes.length,
+                    likes: post.likes,
                 },
                 userId: post.userId,
                 comments: comentsUsers,
             };
 
             res.status(200).json(postData);
-            // if(p.length){
-            //     let data = p[0]
-            //     const arr = {
-            //         userId : data.profile[0],
-            //         post : {
-            //             _id : data._id,
-            //             text : data.text,
-            //             multimedia : data.multimedia,
-            //             multimedia_id : data.multimedia_id,
-            //             category : data.category
-            //         },
-            //         comment : p.map((x) =>{
-            //             return{
-            //                 comment : x.comentarios && x.comentarios,
-            //                 user : x.usuarios && x.usuarios
-            //             }
-            //         })
-            //     }
-            //     return res.status(200).json(arr)
-            // }
 
-            // else if(!p.length){
-            //     p = await Post.findById(postId).populate(['userId', 'commentId']);
-            //        res.status(200).json(p)
-            //  }
         } catch (error) {
             res.status(400).send(error.message);
         }
