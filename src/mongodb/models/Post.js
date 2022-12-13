@@ -1,6 +1,7 @@
 const {model, Schema} = require('mongoose');
 const { Comment } = require('./Comment');
 const { Profile } = require('./Profile');
+const { Like } = require('./Like')
 
 const POST = new Schema({
     text: {
@@ -25,6 +26,10 @@ const POST = new Schema({
     commentId: [{
         type: Schema.Types.ObjectId,
         ref: Comment
+    }],
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: Like
     }]
 });
 
