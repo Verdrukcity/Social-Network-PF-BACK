@@ -1,3 +1,5 @@
+const axios = require('axios');
+
 function validateEmail(email){
     //chequea email valido
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
@@ -26,4 +28,17 @@ function validateAge(birthdate){
     return birthdate
 }
 
-module.exports = {validateEmail, validateAge}
+const maper = async () =>{
+  const m = await axios.get('https://restcountries.com/v3/all');
+  const p = m.data;
+  const tiempo = p.map(x =>{
+     return {
+        name : x.name.official,
+        image : x.flags[1]
+     }
+  })
+  return tiempo
+}
+
+
+module.exports = {validateEmail, validateAge, maper};
