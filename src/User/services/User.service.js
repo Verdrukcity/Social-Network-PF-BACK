@@ -70,36 +70,38 @@ module.exports = {
        try {
           const { id } = req.params;
         let id1 = mongoose.Types.ObjectId(id)
-     
-        const newProfile = await Profile.aggregate([
-         {
-             $match : { "_id" : id1}
+        
+        var newProfile = await Profile.findById(id).select(['user_Name', '_id', 'image_profil', 'country', 'content', 'followers', 'follow'])
+
+        newProfile = await Profile.aggregate([
+          {
+              $match : { "_id" : id1}
+          },
+          {
+             $lookup :{
+                 from : 'mapas',
+                 localField : 'country',
+                 foreignField : '_id',
+                 as : 'country',
+             }
          },
          {
-            $lookup :{
-                from : 'mapas',
-                localField : 'country',
-                foreignField : '_id',
-                as : 'country',
-            }
-        },
-        {
-            $unwind : '$country'
-        },
-         {
-             $lookup :{
-                 from : 'posts',
-                 localField : 'content',
-                 foreignField : '_id',
-                 as : 'contents',
-             }
-         },{
-            $project : {content : 0}
-         }])
+             $unwind : '$country'
+         },
+          {
+              $lookup :{
+                  from : 'posts',
+                  localField : 'content',
+                  foreignField : '_id',
+                  as : 'contents',
+              }
+          },{
+             $project : {content : 0}
+          }])
          
-         res.status(200).json(newProfile)
+         res.status(200).send(newProfile[0])
        } catch (error) {
-        throw Error( error.message)
+        console.log(error.message)
        }
     }
 }
