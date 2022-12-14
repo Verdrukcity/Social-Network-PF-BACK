@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const {
     Message_Create_Post,
     Message_Error_Delete_Post,
+    Message_Find_All_Posts,
+    Message_Error_Find_All_Posts,
 } = require("../../Message");
 
 // agregamos los servicios que queremos exportar
@@ -32,20 +34,33 @@ module.exports = {
                     "userId",
                     "commentId",
                 ]);
+
                 const INFO = [];
                 for (const iterator of POSTS) {
                     //use a for method, because .map doasen't work
                     const uId = mongoose.Types.ObjectId(iterator.userId); //conver the id on something that mongoores recognice
                     const userData = await Profile.findById(uId); //find the profile
+
+                    const allData = {
+                        _id: iterator._doc._id,
+                        text: iterator._doc.text,
+                        multimedia: iterator._doc.multimedia,
+                        multimedia_id: iterator._doc.multimedia_id,
+                        category: iterator._doc.category,
+                        userId: iterator._doc.userId,
+                        commentId: iterator._doc.commentId,
+                        likes: iterator._doc.likes.length,
+                    };
+
                     INFO.push({
-                        ...iterator._doc,
+                        ...allData,
                         userData,
                     });
                 }
-                res.json({ message: "todo ok ", data: INFO });
+                res.json({ message: Message_Find_All_Posts, data: INFO });
             }
         } catch (error) {
-            throw Error(error.message);
+            throw Error({ message: Message_Error_Find_All_Posts });
         }
     },
     makePost: async (req, res) => {
@@ -93,11 +108,13 @@ module.exports = {
         try {
             //join de la info de usuario con el userId contenido en el post
             //el segundo parametro le indica que solamente me traiga el nombre, imagen e ID
-            let post = await Post.findById(postId).populate("userId", {
-                user_Name: 1,
-                image_profil: 1,
-                _id: 1,
-            }).populate("likes")
+            let post = await Post.findById(postId)
+                .populate("userId", {
+                    user_Name: 1,
+                    image_profil: 1,
+                    _id: 1,
+                })
+                .populate("likes");
 
             //join de la info de comentarios con el commentId contenido en el post
             post = await post.populate("commentId");
@@ -115,6 +132,17 @@ module.exports = {
             //obtenemos la info completa de los comentarios con el usuario que lo realizó
             let comentsUsers = await Promise.all(comentUserPromises);
 
+            const likesMap = post.likes.map(async (user) => {
+                const likeProfiles = await Profile.findById(user.usersLiked);
+                return {
+                    _id: likeProfiles._id,
+                    user_Name: likeProfiles.user_Name,
+                    image_profil: likeProfiles.image_profil,
+                }
+            });
+
+            const likesUsers = await Promise.all(likesMap)
+
             //objeto que va a enviar como respuesta
             let postData = {
                 post: {
@@ -122,14 +150,13 @@ module.exports = {
                     multimedia: post.multimedia,
                     multimedia_id: post.multimedia_id,
                     category: post.category,
-                    likes: post.likes,
+                    likes: likesUsers,
                 },
                 userId: post.userId,
                 comments: comentsUsers,
             };
 
             res.status(200).json(postData);
-
         } catch (error) {
             res.status(400).send(error.message);
         }

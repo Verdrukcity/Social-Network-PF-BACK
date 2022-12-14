@@ -44,10 +44,10 @@ module.exports = {
 
               return  res.status(200).json({ message: Message_Add_Like });
             }
-            // console.log(like.usersLiked.equals(findUser._id));
 
             const likeMap = newPost.likes.find((like) => {
                 // const findUser = await Profile.findById(like.usersLiked);
+                //console.log(like.usersLiked.equals(findUser._id));
                 return findUser._id.equals(like.usersLiked) === true
             });
 
