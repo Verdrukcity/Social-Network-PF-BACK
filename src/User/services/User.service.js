@@ -10,12 +10,12 @@ module.exports = {
     createUser : async (req, res)=>{
         try {
             const { email, user_Name , name, lastname,
-                      birthdate, country
+                      birthdate, country, password
                   } = req.body;
 
                 if(
                     !email || !user_Name  || !name || !lastname ||
-                      !birthdate || !country
+                      !birthdate || !country || !password
                   ) throw Error(Message_Error_Create_User)
                   
               const newProfil = await Profile.create(req.body)
