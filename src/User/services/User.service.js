@@ -8,6 +8,7 @@ const {
 
 module.exports = {
     createUser : async (req, res)=>{
+        console.log('aca en el back')
         try {
             const { email, user_Name , name, lastname,
                       birthdate, country, password
