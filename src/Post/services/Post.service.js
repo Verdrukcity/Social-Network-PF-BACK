@@ -17,47 +17,51 @@ module.exports = {
             const { category, text } = req.query;
             const { id } = req.body;
             if (category || text) {
-                const FIND_POSTS = await Post.find({ type, text }).populate([
-                    "userId",
-                    "commentId",
-                ]);
+                const FIND_POSTS = await Post.find({ type, text }).populate("userId",{
+                    _id: 1,
+                    user_Name: 1,
+                    image_profil: 1
+                });
                 res.json(FIND_POSTS);
             }
             if (id) {
-                const POST = await Post.findById(id).populate([
-                    "userId",
-                    "commentId",
-                ]);
+                const POST = await Post.findById(id).populate("userId",{
+                    _id: 1,
+                    user_Name: 1,
+                    image_profil: 1
+                });
                 res.json(POST);
             } else {
-                const POSTS = await Post.find({}).populate([
-                    "userId",
-                    "commentId",
-                ]);
+                const POSTS = await Post.find({}).populate("userId", {
+                    _id: 1,
+                    user_Name: 1,
+                    image_profil: 1
+                });
 
-                const INFO = [];
-                for (const iterator of POSTS) {
-                    //use a for method, because .map doasen't work
-                    const uId = mongoose.Types.ObjectId(iterator.userId); //conver the id on something that mongoores recognice
-                    const userData = await Profile.findById(uId); //find the profile
+                //COMENTO ESTO PORQUE HACE LO MISMO QUE EL POPULATE DE ARRIBA
+                //const INFO = [];
+                // for (const iterator of POSTS) {
+                //     //use a for method, because .map doasen't work
+                //     const uId = mongoose.Types.ObjectId(iterator.userId); //conver the id on something that mongoores recognice
+                //     const userData = await Profile.findById(uId); //find the profile
 
-                    const allData = {
-                        _id: iterator._doc._id,
-                        text: iterator._doc.text,
-                        multimedia: iterator._doc.multimedia,
-                        multimedia_id: iterator._doc.multimedia_id,
-                        category: iterator._doc.category,
-                        userId: iterator._doc.userId,
-                        commentId: iterator._doc.commentId,
-                        likes: iterator._doc.likes.length,
-                    };
+                //     const allData = {
+                //         _id: iterator._doc._id,
+                //         text: iterator._doc.text,
+                //         multimedia: iterator._doc.multimedia,
+                //         multimedia_id: iterator._doc.multimedia_id,
+                //         category: iterator._doc.category,
+                //         userId: iterator._doc.userId,
+                //         commentId: iterator._doc.commentId,
+                //         likes: iterator._doc.likes.length,
+                //     };
 
-                    INFO.push({
-                        ...allData,
-                        userData,
-                    });
-                }
-                res.json({ message: Message_Find_All_Posts, data: INFO });
+                //     INFO.push({
+                //         ...allData,
+                //         userData,
+                //     });
+                // }
+                res.json({ message: Message_Find_All_Posts, data: POSTS });
             }
         } catch (error) {
             throw Error({ message: Message_Error_Find_All_Posts });
