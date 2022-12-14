@@ -8,7 +8,7 @@ const Message_Delete_Category = "Categoria eliminada correctamente.";
 const Message_Delete_Categorys = "Categorias eliminadas correctamente.";
 const Message_Error_Delete_Categorys = "No se suministro el id.";
 const Message_Update_Categorys = "Categoria actualizada.";
-const Message_Error_Update_Categorys = "FRaltan los datos id o text.";
+const Message_Error_Update_Categorys = "Faltan los datos id o text.";
 const Message_Error_Incomplete = "No se suminstraron los datos requeridos.";
 
 ////// Comentary Messages
