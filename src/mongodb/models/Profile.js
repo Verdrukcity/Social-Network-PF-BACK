@@ -32,7 +32,7 @@ const PROFILE = new Schema({
     },
     image_profil: {
         type: String,
-        required: true,
+        //será necesario agregar una imagen por defecto
     },
     image_publi_id: {
         type: String,
