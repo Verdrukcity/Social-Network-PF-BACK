@@ -21,7 +21,7 @@ router.use('/user',routerCreate)
 router.use('/userDetail', routerDetail)
 
 //Ruta de auth user
-route.use('/authuser', routerAuthUser)
+router.use('/authuser', routerAuthUser)
 
 
 module.exports = router;
