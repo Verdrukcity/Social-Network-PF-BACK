@@ -16,6 +16,11 @@ const PROFILE = new Schema({
     user_Name: {
         type: String,
         required: true,
+        unique: true,
+    },
+    password: {
+        type: String,
+        required: true,
     },
     name: {
         type: String,
