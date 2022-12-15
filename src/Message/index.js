@@ -41,8 +41,13 @@ const Message_Error_Find_User = "No existe profile con esos parametros.";
 ////// Auth user Message
 const Message_Auth_User = "Usuario logueado correctamente.";
 const Message_Auth_User_Default = "Usuario por defecto.";
-const Message_Error_Auth_User = "Usuario no logueado, faltan datos";
+const Message_Error_Auth_User = "Usuario no encontrado.";
 const Message_Error_Auth_User_Default = "Usuario por defecto no encontrado";
+const Message_Error_Auth_Password = "Conraseña incorrecta.";
+
+////// Validation token 
+const Message_Error_Access ='Acceso denegado.'; 
+const Message_Error_Validation_Token = 'Token no es válido.'; 
 
 module.exports = {
     Message_Create_Category,
@@ -77,4 +82,7 @@ module.exports = {
     Message_Auth_User_Default,
     Message_Error_Auth_User,
     Message_Error_Auth_User_Default,
+    Message_Error_Auth_Password,
+    Message_Error_Validation_Token,
+    Message_Error_Access
 };
