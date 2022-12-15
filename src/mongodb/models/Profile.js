@@ -4,6 +4,8 @@ const { Follower } = require("./Follower");
 const { Mapa } = require("./mapas");
 const { Post } = require("./Post");
 const { validateEmail, validateAge } = require("./validations/index");
+var uniqueValidator = require('mongoose-unique-validator');
+
 
 const PROFILE = new Schema({
     email: {
@@ -11,7 +13,10 @@ const PROFILE = new Schema({
         required: function () {
             return validateEmail(this.email);
         },
-        unique: true,
+        unique: {
+            value: true,
+            message: 'Email repetido'
+        }
     },
     user_Name: {
         type: String,
@@ -64,7 +69,13 @@ const PROFILE = new Schema({
             ref: Follower,
         },
     ],
+    userStripe:{
+        type: String
+    }
 });
+
+//Mensaje personalizado para avisar cual es el problema
+PROFILE.plugin(uniqueValidator, {message: `El ${this.PATH} ingresado ya se encuentra en uso`});
 
 const Profile = model("Profile", PROFILE);
 module.exports = { Profile };
