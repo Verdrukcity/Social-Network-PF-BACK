@@ -6,9 +6,11 @@ const { Message_Delete_Category } = require('../../Message');
 const stripeAccountsConsult = require("../services/stripeAccountsConsult");
 
 const router= Router()
-
-router.post("/stripe/createAccount/:id", async (req, res)=>{
-    const {id} = req.params
+// Esta ruta crea un nuevo perfil dentro de la cuenta de stripe, y al mismo tiempo linkea el id de esa cuenta con
+// un perfil de reply
+// recibe datos por body
+router.post("/stripe/createAccount/", async (req, res)=>{
+    const {id} = req.body;
     if(id){
         try {
             const user = await acountCreator(id);
@@ -21,11 +23,12 @@ router.post("/stripe/createAccount/:id", async (req, res)=>{
     }
    
 })
-router.get("/stripe/getAccount/:id", async (req, res)=>{
-    const {id} = req.params;
+// con esta ruta consultamos los datos de una cuentra en la API de stripe
+router.get("/stripe/getAccount/", async (req, res)=>{
+    const {id} = req.body;
     if(id){
         try {
-            const accounInfo = await stripeAccountsConsult("acct_1MF3CePKn1BMwBP4");
+            const accounInfo = await stripeAccountsConsult(id);
             res.json(accounInfo)
         } catch (error) {
             res.status(400).json(error.message);
