@@ -64,6 +64,9 @@ const PROFILE = new Schema({
             ref: Follower,
         },
     ],
+    userStripe:{
+        type: String
+    }
 });
 
 const Profile = model("Profile", PROFILE);
