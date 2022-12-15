@@ -10,6 +10,16 @@ router.get("/", async (req, res) => {
     }
 });
 
+/**
+ * ruta que verifica si un usuario esta en la base de datos registrado 
+ * route: /authuser
+ * tipo: post
+ * body: {
+ *   userName : nombre de usuario (string),
+ *   password: contraseña del usuario(string)
+ * }
+ * 
+ */
 router.post("/", async (req, res) => {
     try {
         authUser(req, res);

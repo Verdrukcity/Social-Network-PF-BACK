@@ -1,3 +1,4 @@
+const Joi = require('@hapi/joi');
 const axios = require('axios');
 
 function validateEmail(email){
@@ -41,5 +42,16 @@ const maper = async () =>{
   return tiempo
 }
 
+/**
+ * validaciones para el loggin
+ */
 
-module.exports = {validateEmail, validateAge, maper};
+const schemaLoggin = Joi.object({
+    userName: Joi.string().min(6).max(255).required(),
+    password: Joi.string().min(6).max(1024).required()
+})
+
+
+
+
+module.exports = {validateEmail, validateAge, maper,schemaLoggin};
