@@ -1,7 +1,8 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async function chekout(PRICE_ID, CONNECTED_ACCOUNT_ID){
-    const session = await stripe.checkout.sessions.create({
+    try {
+        const session = await stripe.checkout.sessions.create({
         line_items: [{
           price: PRICE_ID,
           quantity: 1,
@@ -16,4 +17,8 @@ module.exports = async function chekout(PRICE_ID, CONNECTED_ACCOUNT_ID){
         },
       });
       return session
+    } catch (error) {
+        throw Error(error.message)
+    }
+    
 }
