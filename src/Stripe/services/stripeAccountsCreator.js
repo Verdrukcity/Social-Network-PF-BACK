@@ -9,7 +9,6 @@ module.exports = async function acountCreator (id){
     const account = await stripe.accounts.create({
         type: 'express',
         email: userProfile.email,
-        country: "US",
         capabilities: {
             card_payments: {requested: true},
             transfers: {requested: true},
