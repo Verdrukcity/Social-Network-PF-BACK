@@ -27,7 +27,7 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
-
+mongoose.set('strictQuery', false)
 mongoose.connect(mongodb)
 .then(()=>{
   server.listen(port);
