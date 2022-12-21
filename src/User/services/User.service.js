@@ -68,8 +68,10 @@ module.exports = {
     },
     userId : async (req, res) =>{
        try {
-          const { id } = req.params;
-        let id1 = mongoose.Types.ObjectId(id)
+          const { id } = req.query;
+          console.log("db",id)
+          if(id){
+            let id1 = mongoose.Types.ObjectId(id)
         
         var newProfile = await Profile.findById(id).select(['user_Name', '_id', 'image_profil', 'country', 'content', 'followers', 'follow'])
 
@@ -100,6 +102,8 @@ module.exports = {
           }])
          
          res.status(200).send(newProfile[0])
+          } else {res.status(400).json({message: "faltan parametros"})}
+        
        } catch (error) {
         throw Error( error.message)
        }

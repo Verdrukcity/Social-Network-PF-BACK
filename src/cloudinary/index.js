@@ -17,10 +17,11 @@ let createImg = async (file)=>{
     //recibe como argumento el archivo de la imagen
     //subo la imagen a cloud
     if(file.mimetype.split('/')[0] === 'image'){
+        console.log(file)
         const imgFile =  await cloudinary.uploader.upload(file.tempFilePath,{
             folder : 'red social_image'
         })
-
+        console.log("imagen: ", imgFile)
        await fs.unlink(file.tempFilePath) // es para borrar la imagen que se suve a la carpeta /tpm/ luego que se monte 
         //devuelve el archivo de la imagen creada en cloud (objeto con datos)
         return imgFile
@@ -30,10 +31,10 @@ let createImg = async (file)=>{
         const videFile =  await cloudinary.uploader.upload_large(file.tempFilePath,{
             resource_type : "video" , 
             chunk_size : 6000000,
-            folder : 'red social_videos',  
+            folder : 'red_social_videos',  
 
         })
-       await fs.unlink(file) // es para borrar la imagen que se suve a la carpeta /tpm/ luego que se monte 
+       await fs.unlink('/tmp/') // es para borrar la imagen que se suve a la carpeta /tpm/ luego que se monte 
         //devuelve el archivo de la imagen creada en cloud (objeto con datos)
         return videFile
     };
