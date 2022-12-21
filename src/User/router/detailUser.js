@@ -2,7 +2,7 @@ const express = require('express');
 const { userId } = require('../services/User.service');
 const router = express.Router()
 
-router.get('/:id', (req, res)=>{
+router.get('/', (req, res)=>{
     try {
         userId(req, res)
     } catch (error) {
