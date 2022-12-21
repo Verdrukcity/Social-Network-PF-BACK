@@ -34,7 +34,7 @@ let createImg = async (file)=>{
             folder : 'red_social_videos',  
 
         })
-       await fs.unlink('./tmp/') // es para borrar la imagen que se suve a la carpeta /tpm/ luego que se monte 
+       await fs.unlink('/tmp/') // es para borrar la imagen que se suve a la carpeta /tpm/ luego que se monte 
         //devuelve el archivo de la imagen creada en cloud (objeto con datos)
         return videFile
     };
