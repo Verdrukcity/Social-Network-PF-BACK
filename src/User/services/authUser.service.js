@@ -52,7 +52,7 @@ module.exports = {
             
             res.header('auth-token', token).json({
                 message: Message_Auth_User,
-                data: {token}
+                data: {token, id:user._id}
             })
 
             
