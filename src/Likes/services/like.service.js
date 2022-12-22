@@ -58,9 +58,15 @@ module.exports = {
                     console.log({gurda : 'ok'})
                     return res.send("Like add");
                 } else {
-                         await Like.findByIdAndDelete(likeMap._id);
+                    await Like.findByIdAndDelete(likeMap._id);
+
+                    indexLike = newPost.likes.findIndex(like => like.usersLiked !== findUser._id);
+
+                    newPost.likes.splice(indexLike,1)
+                    
+                    newPost.save()
                     console.log({borra : 'delete'})
-                    return res.send("Like delete");
+                    return res.send("Post unliked succesfully");
                 }
                 //return findUser
 
