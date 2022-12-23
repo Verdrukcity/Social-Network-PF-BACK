@@ -74,14 +74,14 @@ module.exports = {
             const { id } = req.params;
 
             if (multimedia && text && category) {
-                const IMG = await createImg(multimedia);
+                const multimed = await createImg(multimedia);
                 //we upload the image or the video and save the information
                 const data = {
                     text,
                     userId: id,
                     category: category,
-                    multimedia: IMG.url ? IMG.url : "",
-                    multimedia_id: IMG.public_id ? IMG.public_id : "",
+                    multimedia: multimed.url ? multimed.url : "",
+                    multimedia_id: multimed.public_id ? multimed.public_id : "",
                 };
 
                 //We save the post on the DB
