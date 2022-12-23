@@ -16,6 +16,12 @@ const POST = new Schema({
         type : String,
         
     },
+    multimediaFullSize:{
+        type: String
+    },
+    resourseType:{
+        type: String
+    },
     category:{
         type : Array,
     },

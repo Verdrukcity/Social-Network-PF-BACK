@@ -74,14 +74,16 @@ module.exports = {
             const { id } = req.params;
 
             if (multimedia && text && category) {
-                const IMG = await createImg(multimedia);
+                const multimed = await createImg(multimedia);
                 //we upload the image or the video and save the information
                 const data = {
                     text,
                     userId: id,
                     category: category,
-                    multimedia: IMG.url ? IMG.url : "",
-                    multimedia_id: IMG.public_id ? IMG.public_id : "",
+                    multimedia: multimed.url ? multimed.url : "",
+                    multimedia_id: multimed.public_id ? multimed.public_id : "",
+                    multimediaFullSize: multimed.urlFullSize? multimed.urlFullSize: "",
+                    resourseType: multimedia.mimetype.split("/")[0],
                 };
 
                 //We save the post on the DB
@@ -94,6 +96,7 @@ module.exports = {
                 res.status(200).json({
                     message: Message_Create_Post,
                     data: { ...POST._doc },
+                    data_Type: multimed.type,
                     profile: {
                         _id: newProfile._id,
                         user_Name: newProfile.user_Name,

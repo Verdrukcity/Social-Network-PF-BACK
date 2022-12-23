@@ -17,29 +17,44 @@ let createImg = async (file)=>{
     //recibe como argumento el archivo de la imagen
     //subo la imagen a cloud
     if(file.mimetype.split('/')[0] === 'image'){
-        console.log(file)
+
         const imgFile =  await cloudinary.uploader.upload(file.tempFilePath,{
             folder : 'red social_image'
-        })
-        console.log("imagen: ", imgFile)
+        });
+       const imgCrop = createImageTag(imgFile.public_id); //Crea un nuevo link con la edicion a las imagenes
+        imgFile.urlFullSize = imgFile.url;        //guardamos el url de tamaño completo
+        imgFile.url = imgCrop;
+       
        await fs.unlink(file.tempFilePath) // es para borrar la imagen que se suve a la carpeta /tpm/ luego que se monte 
         //devuelve el archivo de la imagen creada en cloud (objeto con datos)
         return imgFile
     };
     if(file.mimetype.split('/')[0] === 'video'){
-        console.log(file);
-        const videFile =  await cloudinary.uploader.upload_large(file.tempFilePath,{
+        
+        const videFile =  await cloudinary.uploader.upload(file.tempFilePath,{
             resource_type : "video" , 
-            chunk_size : 6000000,
             folder : 'red_social_videos',  
-
         })
-       await fs.unlink('/tmp/') // es para borrar la imagen que se suve a la carpeta /tpm/ luego que se monte 
+    //    await fs.unlink('/tmp/') // es para borrar la imagen que se suve a la carpeta /tpm/ luego que se monte 
         //devuelve el archivo de la imagen creada en cloud (objeto con datos)
         return videFile
     };
 
 }
+const createImageTag = (publicId,) => {
+
+   
+
+    // Create an image tag with transformations applied to the src URL
+    let imageTag = cloudinary.url(publicId, {
+      transformation: [
+        { width: 400,},
+
+      ],
+    });
+
+    return imageTag;
+};
 
 let delImg = async (fileId)=>{
     //recibe como argumento el id de la imagen en cloudinary
