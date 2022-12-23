@@ -37,7 +37,7 @@ const PROFILE = new Schema({
     image_profil: {
         type: String,
         default:
-            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            "https://res.cloudinary.com/dlr95phqw/image/upload/w_400/v1/red%20social_image/fpv8bltjmxw0udb4utuf",
         //será necesario agregar una imagen por defecto
     },
     image_publi_id: {
