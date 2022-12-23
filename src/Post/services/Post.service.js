@@ -82,6 +82,7 @@ module.exports = {
                     category: category,
                     multimedia: multimed.url ? multimed.url : "",
                     multimedia_id: multimed.public_id ? multimed.public_id : "",
+                    multimediaFullSize: multimed.urlFullSize? multimed.urlFullSize: "",
                 };
 
                 //We save the post on the DB
