@@ -34,7 +34,6 @@ let createImg = async (file)=>{
         const videFile =  await cloudinary.uploader.upload(file.tempFilePath,{
             resource_type : "video" , 
             folder : 'red_social_videos',  
-
         })
     //    await fs.unlink('/tmp/') // es para borrar la imagen que se suve a la carpeta /tpm/ luego que se monte 
         //devuelve el archivo de la imagen creada en cloud (objeto con datos)

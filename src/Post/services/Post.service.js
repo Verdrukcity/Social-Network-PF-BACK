@@ -83,6 +83,7 @@ module.exports = {
                     multimedia: multimed.url ? multimed.url : "",
                     multimedia_id: multimed.public_id ? multimed.public_id : "",
                     multimediaFullSize: multimed.urlFullSize? multimed.urlFullSize: "",
+                    resourseType: multimedia.mimetype.split("/")[0],
                 };
 
                 //We save the post on the DB
@@ -95,6 +96,7 @@ module.exports = {
                 res.status(200).json({
                     message: Message_Create_Post,
                     data: { ...POST._doc },
+                    data_Type: multimed.type,
                     profile: {
                         _id: newProfile._id,
                         user_Name: newProfile.user_Name,
