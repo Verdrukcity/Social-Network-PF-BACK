@@ -48,7 +48,7 @@ const createImageTag = (publicId,) => {
     // Create an image tag with transformations applied to the src URL
     let imageTag = cloudinary.url(publicId, {
       transformation: [
-        { width: 250, height: 250 },
+        { width: 400,},
 
       ],
     });
