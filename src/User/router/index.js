@@ -7,6 +7,8 @@ const routerDetail = require('./detailUser.js')
 //Importamos la ruta del auth
 const routerAuthUser = require('./authUser.js')
 
+//importamos la ruta para editar el usuario
+const routerUserEdit = require('./userEdit.js')
 
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
@@ -22,6 +24,9 @@ router.use('/userDetail', routerDetail)
 
 //Ruta de auth user
 router.use('/authuser', routerAuthUser)
+
+//Ruta editar datos de usuario
+router.use('/useredit', routerUserEdit)
 
 
 module.exports = router;

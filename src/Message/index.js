@@ -37,6 +37,7 @@ const Message_Error_Delete_Post = "No existe Post.";
 ////// User Messages
 const Message_Error_Create_User = "Faltan parametros.";
 const Message_Error_Find_User = "No existe profile con esos parametros.";
+const Message_Error_Not_Minimum_Age = "No tiene la edad minima requerida.";
 
 ////// Auth user Message
 const Message_Auth_User = "Usuario logueado correctamente.";
@@ -45,9 +46,16 @@ const Message_Error_Auth_User = "Usuario no encontrado.";
 const Message_Error_Auth_User_Default = "Usuario por defecto no encontrado";
 const Message_Error_Auth_Password = "Conraseña incorrecta.";
 
-////// Validation token 
-const Message_Error_Access ='Acceso denegado.'; 
-const Message_Error_Validation_Token = 'Token no es válido.'; 
+////// Validation token
+const Message_Error_Access = "Acceso denegado.";
+const Message_Error_Validation_Token = "Token no es válido.";
+
+////// User update
+const Message_User_Update = "Usuario actualizado.";
+const Message_Error_Id = "Id esta indefinido.";
+const Message_Error_Username = "Username no definido.";
+const Message_Error_Image_Profile = "Imagen de perfil no definida.";
+const Message_Error_Password = "Contraseña no definida.";
 
 module.exports = {
     Message_Create_Category,
@@ -73,6 +81,7 @@ module.exports = {
     Message_Error_Delete_Post,
     Message_Error_Create_User,
     Message_Error_Find_User,
+    Message_Error_Not_Minimum_Age,
     Message_Error_No_Id,
     Message_Error_Find_Like,
     Message__Find_Like,
@@ -84,5 +93,10 @@ module.exports = {
     Message_Error_Auth_User_Default,
     Message_Error_Auth_Password,
     Message_Error_Validation_Token,
-    Message_Error_Access
+    Message_Error_Access,
+    Message_User_Update,
+    Message_Error_Id,
+    Message_Error_Username,
+    Message_Error_Image_Profile,
+    Message_Error_Password,
 };
