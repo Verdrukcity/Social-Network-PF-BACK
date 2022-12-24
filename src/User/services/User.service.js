@@ -151,21 +151,29 @@ module.exports = {
         try {
             const { id } = req.params;
             const { user_Name, image_profil, password, image_publi_id } = req.body;
-            const { imageProfile } = req.files;
+            let imageProfile
+            if(req.files) imageProfile = req.files.imageProfile;
+
+            let imageProfileSet = image_profil
+            let imageProfileId = image_publi_id
 
             if (!id) throw Error(Message_Error_Id);
             if (!user_Name) throw Error(Message_Error_Username);
-            if (!imageProfile) throw new Error(Message_Error_Image_Profile);
+            //if (!imageProfile) throw new Error(Message_Error_Image_Profile);
             if (!password) throw new Error(Message_Error_Password);
 
             if(image_publi_id){
                 const deletedImage = await delImg(image_publi_id)
             }
-            const userImageProfile = await createImg(imageProfile)
+            if (imageProfile) {
+                const userImageProfile = await createImg(imageProfile)
+                imageProfileSet = userImageProfile.url
+                imageProfileId = userImageProfile.public_id
+            }
 
             const user = await Profile.findById(id);
             const filter = { _id: id };
-            const update = { user_Name, password, image_profil: userImageProfile.url, image_publi_id:  userImageProfile.public_id};
+            const update = { user_Name, password, image_profil: imageProfileSet, image_publi_id:  imageProfileId};
 
             let userUpdate = await Profile.findOneAndUpdate(filter, update, {
                 returnOriginal: false,
