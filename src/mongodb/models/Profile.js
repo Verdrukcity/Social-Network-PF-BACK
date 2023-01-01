@@ -1,57 +1,84 @@
-const { model, Schema } = require('mongoose');
-const { Follow } = require('./Follow');
-const { Follower } = require('./Follower');
-const { Post } = require('./Post');
-const {validateEmail, validateAge} = require('./validations/index');
+const { model, Schema } = require("mongoose");
+const { Follow } = require("./Follow");
+const { Follower } = require("./Follower");
+const { Mapa } = require("./mapas");
+const { Post } = require("./Post");
+const { validateEmail, validateAge } = require("./validations/index");
+var uniqueValidator = require("mongoose-unique-validator");
 
 const PROFILE = new Schema({
-
-    email : {
-        type : String,
-        required: function () {return validateEmail(this.email)}
-        ,
-        unique: true
+    email: {
+        type: String,
+        required: function () {
+            return validateEmail(this.email);
+        },
+        unique: {
+            value: true,
+            message: "Email repetido",
+        },
     },
-    user_Name :{
-       type : String,
-       required : true
+    user_Name: {
+        type: String,
+        required: true,
+        unique: true,
     },
-    name : {
-        type : String,
-        required : true
-     },
-    lastname : {
-        type : String,
-        required : true
-     },
-    image_profil : {
-        type : String,
-        required : true
-     },
-     image_publi_id :{
-        type : String
-     },
-    birthdate : {
-        type : String,
-        required : function () {return validateAge(this.birthdate)}
-     },
-    country : {
-        type : String,
-        required : true
-     },
-    content : [{
-        type : Schema.Types.ObjectId,
-        ref : Post
-    }],
-    follow :{
-        type : Array,
-        ref: Follow
+    password: {
+        type: String,
+        required: true,
     },
-    followers : [{
-        type : Schema.Types.ObjectId,
-        ref : Follower
-    }]
+    name: {
+        type: String,
+        required: true,
+    },
+    lastname: {
+        type: String,
+        required: true,
+    },
+    image_profil: {
+        type: String,
+        default:
+            "https://res.cloudinary.com/dlr95phqw/image/upload/w_400/v1/red%20social_image/fpv8bltjmxw0udb4utuf",
+        //será necesario agregar una imagen por defecto
+    },
+    image_publi_id: {
+        type: String,
+    },
+    birthdate: {
+        type: String,
+        required: function () {
+            return validateAge(this.birthdate);
+        },
+    },
+    country: {
+        type: Schema.Types.ObjectId,
+        ref: Mapa,
+        required: true,
+    },
+    content: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: Post,
+        },
+    ],
+    follow: {
+        type: Array,
+        ref: Follow,
+    },
+    followers: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: Follower,
+        },
+    ],
+    userStripe: {
+        type: String,
+    },
 });
 
-const Profile = model('Profile', PROFILE);
-module.exports= {Profile};
+//Mensaje personalizado para avisar cual es el problema
+PROFILE.plugin(uniqueValidator, {
+    message: `El ${this.PATH} ingresado ya se encuentra en uso`,
+});
+
+const Profile = model("Profile", PROFILE);
+module.exports = { Profile };

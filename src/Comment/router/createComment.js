@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { comments, createComment } = require('../services/Comment.service')
+const { comments, createComment } = require('../services/comment.service')
 
 //aqui manejo las rutas del comment
 
@@ -12,12 +12,12 @@ const { comments, createComment } = require('../services/Comment.service')
  */
 
 //                                      Search all || search by text || search by type
-router.get("/", async (req, res) => {
-    try {
-        comments(req, res)
-    } catch (error) {
-        res.status(400).json(error.message)
-    }
+router.get('/', async (req, res) => {
+  try {
+    comments(req, res)
+  } catch (error) {
+    res.status(400).json(error.message)
+  }
 })
 /**
  * Genera un nuevo post
@@ -27,15 +27,11 @@ router.get("/", async (req, res) => {
  */
 
 router.post('/:id', async (req, res) => {
-    try {
-        createComment(req, res)
-
-    } catch (error) {
-        res.status(400).json({ message: error.message })
-    }
-
+  try {
+    createComment(req, res)
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
 })
 
 module.exports = router
-
-

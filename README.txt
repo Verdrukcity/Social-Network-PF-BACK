@@ -53,3 +53,5 @@ rutas de Back
     }
 }
 
+las validaciones estan dentro de mongo 
+middlewares mientrastanto en cada ruta en especifico

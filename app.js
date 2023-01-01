@@ -28,7 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //↓Middleware for upload files
 app.use(fileUpload({
   useTempFiles : true,
-  tempFileDir : './tmp/'
+  tempFileDir : '/tmp/'
 }));
 
 //Routes

@@ -1,3 +1,6 @@
+const Joi = require('@hapi/joi');
+const axios = require('axios');
+
 function validateEmail(email){
     //chequea email valido
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
@@ -26,4 +29,29 @@ function validateAge(birthdate){
     return birthdate
 }
 
-module.exports = {validateEmail, validateAge}
+const maper = async () =>{
+  const m = await axios.get('https://restcountries.com/v3/all');
+  const p = m.data;
+  const tiempo = p.map(x =>{
+     return {
+        name : x.name.common,
+        image : x.flags[1],
+        areacode : `${x.idd.root ? x.idd.root : "No area code"}${x.idd.suffixes ? x.idd.suffixes.length > 1 ? "" : x.idd.suffixes[0]  : ""}`
+     }
+  })
+  return tiempo
+}
+
+/**
+ * validaciones para el loggin
+ */
+
+const schemaLoggin = Joi.object({
+    userName: Joi.string().min(2).max(255).required(),
+    password: Joi.string().min(2).max(1024).required()
+})
+
+
+
+
+module.exports = {validateEmail, validateAge, maper,schemaLoggin};
