@@ -80,7 +80,7 @@ module.exports = {
                     text,
                     userId: id,
                     category: category,
-                    multimedia: multimed.url ? multimed.url : "",
+                    multimedia: multimed.secure_url ? multimed.secure_url : "",
                     multimedia_id: multimed.public_id ? multimed.public_id : "",
                     multimediaFullSize: multimed.urlFullSize? multimed.urlFullSize: "",
                     resourseType: multimedia.mimetype.split("/")[0],
