@@ -4,6 +4,9 @@ const { Profile } = require('./Profile');
 const { Like } = require('./Like')
 
 const POST = new Schema({
+    title : {
+        type : String,
+    },
     text: {
         type : String,
 
@@ -15,6 +18,9 @@ const POST = new Schema({
     multimedia_id :{
         type : String,
         
+    },
+    status : {
+        type : Boolean,
     },
     category:{
         type : Array,
