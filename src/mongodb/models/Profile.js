@@ -50,10 +50,12 @@ const PROFILE = new Schema({
         },
     },
     status :{
-        type :Boolean,
+        type : Boolean,
+        default : true 
     },
     role : {
         type : String,
+        default : user
     },
     country: {
         type: Schema.Types.ObjectId,
