@@ -55,7 +55,7 @@ const PROFILE = new Schema({
     },
     role : {
         type : String,
-        default : user
+        default : "user"
     },
     country: {
         type: Schema.Types.ObjectId,
