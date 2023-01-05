@@ -1,4 +1,6 @@
 const nodemailer = require('nodemailer')
+require('dotenv').config()
+const {REPLYGMAIL, REPLYGMAILPASS} = process.env
 
 module.exports = {
     sendRegisterMail: async (receiver) => {
@@ -9,8 +11,8 @@ module.exports = {
                 port: 587,
                 secure: false, // true for 465, false for other ports
                 auth: {
-                user: 'social.reply.team@gmail.com', 
-                pass: 'jmukptcfnxxxbbow', 
+                user: REPLYGMAIL, 
+                pass: REPLYGMAILPASS, 
                 },
             });
             
