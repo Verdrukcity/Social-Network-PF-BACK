@@ -6,6 +6,7 @@ const { Like } = require('./Like')
 const POST = new Schema({
     title : {
         type : String,
+        // required : true,
     },
     text: {
         type : String,
