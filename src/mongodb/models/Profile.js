@@ -4,8 +4,7 @@ const { Follower } = require("./Follower");
 const { Mapa } = require("./mapas");
 const { Post } = require("./Post");
 const { validateEmail, validateAge } = require("./validations/index");
-var uniqueValidator = require('mongoose-unique-validator');
-
+var uniqueValidator = require("mongoose-unique-validator");
 
 const PROFILE = new Schema({
     email: {
@@ -15,8 +14,8 @@ const PROFILE = new Schema({
         },
         unique: {
             value: true,
-            message: 'Email repetido'
-        }
+            message: "Email repetido",
+        },
     },
     user_Name: {
         type: String,
@@ -37,6 +36,8 @@ const PROFILE = new Schema({
     },
     image_profil: {
         type: String,
+        default:
+            "https://res.cloudinary.com/dlr95phqw/image/upload/w_400/v1/red%20social_image/fpv8bltjmxw0udb4utuf",
         //será necesario agregar una imagen por defecto
     },
     image_publi_id: {
@@ -75,10 +76,15 @@ const PROFILE = new Schema({
             ref: Follower,
         },
     ],
+    userStripe: {
+        type: String,
+    },
 });
 
 //Mensaje personalizado para avisar cual es el problema
-PROFILE.plugin(uniqueValidator, {message: `El ${this.PATH} ingresado ya se encuentra en uso`});
+PROFILE.plugin(uniqueValidator, {
+    message: `El ${this.PATH} ingresado ya se encuentra en uso`,
+});
 
 const Profile = model("Profile", PROFILE);
 module.exports = { Profile };

@@ -47,8 +47,8 @@ const maper = async () =>{
  */
 
 const schemaLoggin = Joi.object({
-    userName: Joi.string().min(6).max(255).required(),
-    password: Joi.string().min(6).max(1024).required()
+    userName: Joi.string().min(2).max(255).required(),
+    password: Joi.string().min(2).max(1024).required()
 })
 
 

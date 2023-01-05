@@ -20,7 +20,8 @@ module.exports = {
                 const FIND_POSTS = await Post.find({ type, text }).populate("userId",{
                     _id: 1,
                     user_Name: 1,
-                    image_profil: 1
+                    image_profil: 1,
+                    userStripe: 1,
                 });
                 res.json(FIND_POSTS);
             }
@@ -28,16 +29,23 @@ module.exports = {
                 const POST = await Post.findById(id).populate("userId",{
                     _id: 1,
                     user_Name: 1,
-                    image_profil: 1
+                    image_profil: 1,
+                    userStripe: 1,
                 });
                 res.json(POST);
             } else {
                 const POSTS = await Post.find({}).populate("userId", {
                     _id: 1,
                     user_Name: 1,
-                    image_profil: 1
+                    image_profil: 1,
+                    userStripe: 1,
                 });
 
+                const likesPromises = POSTS.map(post => post.populate('likes'))
+
+                //post con info de usuarios de likes
+                const postWhitLikes = await Promise.all(likesPromises)
+                
                 //COMENTO ESTO PORQUE HACE LO MISMO QUE EL POPULATE DE ARRIBA
                 //const INFO = [];
                 // for (const iterator of POSTS) {
@@ -61,10 +69,10 @@ module.exports = {
                 //         userData,
                 //     });
                 // }
-                res.json({ message: Message_Find_All_Posts, data: POSTS });
+                res.json({ message: Message_Find_All_Posts, data: postWhitLikes });
             }
         } catch (error) {
-            throw Error({ message: Message_Error_Find_All_Posts });
+            throw Error(Message_Error_Find_All_Posts);
         }
     },
     makePost: async (req, res) => {
@@ -74,14 +82,16 @@ module.exports = {
             const { id } = req.params;
 
             if (multimedia && text && category) {
-                const IMG = await createImg(multimedia);
+                const multimed = await createImg(multimedia);
                 //we upload the image or the video and save the information
                 const data = {
                     text,
                     userId: id,
                     category: category,
-                    multimedia: IMG.url ? IMG.url : "",
-                    multimedia_id: IMG.public_id ? IMG.public_id : "",
+                    multimedia: multimed.secure_url ? multimed.secure_url : "",
+                    multimedia_id: multimed.public_id ? multimed.public_id : "",
+                    multimediaFullSize: multimed.urlFullSize? multimed.urlFullSize: "",
+                    resourseType: multimedia.mimetype.split("/")[0],
                 };
 
                 //We save the post on the DB
@@ -94,6 +104,7 @@ module.exports = {
                 res.status(200).json({
                     message: Message_Create_Post,
                     data: { ...POST._doc },
+                    data_Type: multimed.type,
                     profile: {
                         _id: newProfile._id,
                         user_Name: newProfile.user_Name,

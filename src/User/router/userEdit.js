@@ -1,10 +1,10 @@
 const express = require('express');
-const { userId } = require('../services/User.service');
+const { userEdit } = require('../services/User.service');
 const router = express.Router()
 
-router.get('/', (req, res)=>{
+router.post('/:id', (req, res)=>{
     try {
-        userId(req, res)
+        userEdit(req, res)
     } catch (error) {
         res.status(400).json({message: error.message})
     }

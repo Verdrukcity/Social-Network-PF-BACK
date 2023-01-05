@@ -20,7 +20,13 @@ const POST = new Schema({
         
     },
     status : {
-        type : Boolean,
+        type : Boolean
+    },
+    multimediaFullSize:{
+        type: String
+    },
+    resourseType:{
+        type: String
     },
     category:{
         type : Array,
