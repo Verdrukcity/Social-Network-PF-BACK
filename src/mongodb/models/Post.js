@@ -4,6 +4,10 @@ const { Profile } = require('./Profile');
 const { Like } = require('./Like')
 
 const POST = new Schema({
+    title : {
+        type : String,
+        // required : true,
+    },
     text: {
         type : String,
 
@@ -15,6 +19,10 @@ const POST = new Schema({
     multimedia_id :{
         type : String,
         
+    },
+    status : {
+        type : Boolean,
+        default : true
     },
     multimediaFullSize:{
         type: String

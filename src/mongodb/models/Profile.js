@@ -49,6 +49,14 @@ const PROFILE = new Schema({
             return validateAge(this.birthdate);
         },
     },
+    status :{
+        type : Boolean,
+        default : true 
+    },
+    role : {
+        type : String,
+        default : "user",
+    },
     country: {
         type: Schema.Types.ObjectId,
         ref: Mapa,
