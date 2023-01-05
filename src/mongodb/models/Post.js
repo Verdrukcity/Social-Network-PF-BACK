@@ -20,7 +20,8 @@ const POST = new Schema({
         
     },
     status : {
-        type : Boolean
+        type : Boolean,
+        default : true
     },
     multimediaFullSize:{
         type: String
