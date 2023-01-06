@@ -14,7 +14,7 @@ module.exports = {
                         status : true
                       }); 
                       const upUser = await Profile.findById(userProfile._id);
-            res.status(200).json(upUser)
+            res.status(200).json(upUser);
             
         } catch (error) {
             res.status(400).send(error.message);
