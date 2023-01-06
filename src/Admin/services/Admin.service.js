@@ -14,10 +14,10 @@ module.exports = {
                         status : true
                       }); 
                       const upUser = await Profile.findById(userProfile._id);
-            res.status(200).json(upUser)
+            res.status(200).json(upUser);
             
         } catch (error) {
-            res.status(400).send(error.message)
+            res.status(400).send(error.message);
         }
     },
 
@@ -33,7 +33,7 @@ module.exports = {
                         status : true
                       }); 
                       const newPostUp = await Post.findById(newPost._id);
-            res.status(200).json(newPostUp)
+            res.status(200).json(newPostUp);
             
         } catch (error) {
             res.status(400).send(error.message)
