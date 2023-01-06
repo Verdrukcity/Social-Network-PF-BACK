@@ -21,6 +21,7 @@ module.exports = {
                     user_Name: 1,
                     image_profil: 1,
                     userStripe: 1,
+                    status : 1
                 });
                 res.json(FIND_POSTS);
             }
@@ -30,6 +31,7 @@ module.exports = {
                     user_Name: 1,
                     image_profil: 1,
                     userStripe: 1,
+                    status : 1
                 });
                 res.json(POST);
             } else {
@@ -38,6 +40,7 @@ module.exports = {
                     user_Name: 1,
                     image_profil: 1,
                     userStripe: 1,
+                    status : 1
                 });
 
                 const likesPromises = POSTS.map(post => post.populate('likes'))
@@ -104,6 +107,7 @@ module.exports = {
                     user_Name: 1,
                     image_profil: 1,
                     _id: 1,
+                    status : 1
                 })
                 .populate("likes");
 
@@ -129,6 +133,7 @@ module.exports = {
                     _id: likeProfiles._id,
                     user_Name: likeProfiles.user_Name,
                     image_profil: likeProfiles.image_profil,
+                    status : likeProfiles.status
                 }
             });
 
