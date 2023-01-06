@@ -33,7 +33,7 @@ module.exports = {
                         status : true
                       }); 
                       const newPostUp = await Post.findById(newPost._id);
-            res.status(200).json(newPostUp)
+            res.status(200).json(newPostUp);
             
         } catch (error) {
             res.status(400).send(error.message)
