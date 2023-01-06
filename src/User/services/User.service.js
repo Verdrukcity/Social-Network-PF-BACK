@@ -97,7 +97,6 @@ module.exports = {
     userId: async (req, res) => {
         try {
             const { id } = req.query;
-            console.log("db", id);
             if (id) {
                 let id1 = mongoose.Types.ObjectId(id);
 
@@ -187,4 +186,48 @@ module.exports = {
             res.status(400).json(error.message);
         }
     },
+    usersVerify: async (req, res) => {
+        try {
+            const newPerfil = await Profile.aggregate([
+                /*{
+                    $match: req.query, // puede buscar por query la refrencia, si no tiene qury llegaran todos los profiles
+                },*/ // la ruta es user - no puede tener la ruta sucia si no va a buscar  los profile
+                {
+                    // si la ruta llega asi - /user?name='', manda un error ojoooo
+                    $lookup: {
+                        from: "mapas",
+                        localField: "country",
+                        foreignField: "_id",
+                        as: "country",
+                    },
+                },
+                {
+                    $unwind: "$country",
+                },
+                {
+                    $lookup: {
+                        from: "posts",
+                        let: { image: "$content" },
+                        pipeline: [
+                            {
+                                $match: {
+                                    $expr: {
+                                        $in: ["$_id", "$$image"],
+                                    },
+                                },
+                            },
+                        ],
+                        as: "posts",
+                    },
+                },
+                {
+                    $project: { content: 0 },
+                },
+            ]);
+            if (!newPerfil.length) throw Error(Message_Error_Find_User);
+            res.status(200).json(newPerfil);
+        } catch (error) {
+            res.status(400).json(error.message);
+        }
+    }
 };
