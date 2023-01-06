@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const verifyToken = require('../../middlewares');
+const {verifyToken} = require('../../middlewares');
 
 const routerCreate = require('./create.router')
 

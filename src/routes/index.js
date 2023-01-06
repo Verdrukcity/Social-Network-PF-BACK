@@ -10,6 +10,7 @@ const Pago=require('../Pago/router/index')
 const stripeRoutes = require("../Stripe/routes/index.js")
 const admin = require('../Admin/router/index.js')
 const mail = require ('../Mails/route/index.js')
+const usersVerify = require('../User/router/index.js')
 
 /**
  * distribución de rutas
@@ -17,6 +18,7 @@ const mail = require ('../Mails/route/index.js')
 router.use('/',indexRouterCreate);
 router.use('/', categoriesRoute);
 router.use('/', user);
+router.use('/', usersVerify);
 router.use('/', comment);
 router.use('/', MAPA)
 router.use('/', Like )

@@ -11,14 +11,14 @@ const { createUser, users } = require('../services/User.service')
  * no requiere de parametro alguno pero puede ocupar Query
  */
 
-//                                      Search all || search by text || search by type
-router.get("/", async (req, res) => {
+//  Esta desactivada par que no cualquiera pueda tener los usuarios              Search all || search by text || search by type
+/*router.get("/", async (req, res) => {
     try {
          users(req, res)
     } catch (error) {
         res.status(400).json({message : error.message})
     }
-})
+})*/
 /**
  * Genera un nuevo profile
  * tipo : profile
