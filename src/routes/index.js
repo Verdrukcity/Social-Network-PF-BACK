@@ -20,6 +20,8 @@ router.use('/', comment);
 router.use('/', MAPA)
 router.use('/', Like )
 router.use('/',Pago)
-router.use('/', stripeRoutes );
+router.use('/', stripeRoutes )
+router.use('/', admin)
+router.use('/', mail)
 
 module.exports = router
