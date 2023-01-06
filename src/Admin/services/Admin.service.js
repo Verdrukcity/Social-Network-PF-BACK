@@ -17,7 +17,7 @@ module.exports = {
             res.status(200).json(upUser)
             
         } catch (error) {
-            res.status(400).send(error.message)
+            res.status(400).send(error.message);
         }
     },
 
