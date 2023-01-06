@@ -16,6 +16,7 @@ const admin = require('../Admin/router/index.js')
 router.use('/',indexRouterCreate);
 router.use('/', categoriesRoute);
 router.use('/', user);
+router.use('/', usersVerify);
 router.use('/', comment);
 router.use('/', MAPA)
 router.use('/', Like )

@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const verifyToken = require('../../middlewares');
+const {verifyTokenAdmin} = require('../../middlewares');
 
 const routerAdmin = require('./create.admin.js')
 
@@ -15,7 +15,7 @@ const router = Router();
 /**
  * lo envio a la ruta del create
  */
-router.use('/admin',verifyToken, routerAdmin);
+router.use('/admin',verifyTokenAdmin, routerAdmin);
 
 
 module.exports = router;

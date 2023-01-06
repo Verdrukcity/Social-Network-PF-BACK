@@ -1,7 +1,10 @@
 const { Router } = require('express');
 const router = Router();
 
+const {verifyTokenAdmin} = require('../../middlewares');
+
 const routerCreate = require('./createUser.js')
+const routerUsersVerify = require('./usersVerify.js')
 
 const routerDetail = require('./detailUser.js')
 //Importamos la ruta del auth
@@ -19,7 +22,9 @@ const routerUserEdit = require('./userEdit.js')
 /**
  * lo envio a la ruta del user
  */
-router.use('/user',routerCreate)
+router.use('/user', routerCreate)
+
+router.use('/usersverify', verifyTokenAdmin, routerUsersVerify)
 
 //ruta de detail
 router.use('/userDetail', routerDetail)
