@@ -8,8 +8,10 @@ const MAPA = require('../mapas/router/index.js');
 const Like = require('../Likes/route/index')
 const Pago=require('../Pago/router/index')
 const stripeRoutes = require("../Stripe/routes/index.js")
-const mail = require ('../Mails/route/index.js')
 const admin = require('../Admin/router/index.js')
+const mail = require ('../Mails/route/index.js')
+const usersVerify = require('../User/router/index.js')
+
 /**
  * distribución de rutas
  */
