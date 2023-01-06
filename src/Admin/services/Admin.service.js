@@ -1,20 +1,28 @@
 const { Profile } = require('../../mongodb/models/Profile.js');
 const { Post } = require('../../mongodb/models/Post.js');
 
+const {Message_Admin_Activo, 
+        Message_Admin_Inactivo,
+            Message_Error_Admin} = require('../../Message/index.js');
+
 module.exports = {
     upUser : async (req, res) =>{
         try {
-            const userProfile = await Profile.findById(req.body.id);
+            const {id} = req.body;
+            const userProfile = await Profile.findById(id);
+            if(userProfile) throw Error({Message : Message_Error_Admin})
             
-                userProfile.status ? 
-                  await Profile.findByIdAndUpdate(userProfile._id,{
+                if(userProfile.status){
+                  await Profile.findByIdAndUpdate(id,{
                       status : false
-                    }) :
-                   await Profile.findByIdAndUpdate(userProfile._id,{
+                    }) 
+                    return res.status(200).json({Message : Message_Admin_Inactivo});
+                }else{
+                    await Profile.findByIdAndUpdate(id,{
                         status : true
-                      }); 
-                      const upUser = await Profile.findById(userProfile._id);
-            res.status(200).json(upUser);
+                    });
+                    return res.status(200).json({Message : Message_Admin_Activo});
+                    } 
             
         } catch (error) {
             res.status(400).send(error.message);
@@ -23,17 +31,21 @@ module.exports = {
 
     postUp : async (req, res) =>{
         try {
-            const newPost = await Post.findById(req.body.id);
-            
-                newPost.status ? 
-                  await Post.findByIdAndUpdate(newPost._id,{
+            const {id} = req.body;
+            const newPost = await Post.findById(id);
+            if(newPost) throw Error({Message : Message_Error_Admin})
+
+               if(newPost.status){
+                  await Post.findByIdAndUpdate(id,{
                       status : false
-                    }) :
-                   await Post.findByIdAndUpdate(newPost._id,{
+                    }) 
+                    return res.status(200).json({Message : Message_Admin_Inactivo});
+                }else{
+                   await Post.findByIdAndUpdate(id,{
                         status : true
-                      }); 
-                      const newPostUp = await Post.findById(newPost._id);
-            res.status(200).json(newPostUp);
+                      })
+                      return res.status(200).json({Message : Message_Admin_Activo});
+                    } 
             
         } catch (error) {
             res.status(400).send(error.message)
