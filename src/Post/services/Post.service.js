@@ -1,7 +1,6 @@
 const { createImg, delImg } = require("../../cloudinary/index.js");
 const { Post } = require("../../mongodb/models/Post.js");
 const { Profile } = require("../../mongodb/models/Profile.js");
-const mongoose = require("mongoose");
 
 const {
     Message_Create_Post,
@@ -46,29 +45,6 @@ module.exports = {
                 //post con info de usuarios de likes
                 const postWhitLikes = await Promise.all(likesPromises)
                 
-                //COMENTO ESTO PORQUE HACE LO MISMO QUE EL POPULATE DE ARRIBA
-                //const INFO = [];
-                // for (const iterator of POSTS) {
-                //     //use a for method, because .map doasen't work
-                //     const uId = mongoose.Types.ObjectId(iterator.userId); //conver the id on something that mongoores recognice
-                //     const userData = await Profile.findById(uId); //find the profile
-
-                //     const allData = {
-                //         _id: iterator._doc._id,
-                //         text: iterator._doc.text,
-                //         multimedia: iterator._doc.multimedia,
-                //         multimedia_id: iterator._doc.multimedia_id,
-                //         category: iterator._doc.category,
-                //         userId: iterator._doc.userId,
-                //         commentId: iterator._doc.commentId,
-                //         likes: iterator._doc.likes.length,
-                //     };
-
-                //     INFO.push({
-                //         ...allData,
-                //         userData,
-                //     });
-                // }
                 res.json({ message: Message_Find_All_Posts, data: postWhitLikes });
             }
         } catch (error) {
