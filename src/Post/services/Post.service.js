@@ -35,7 +35,7 @@ module.exports = {
                 });
                 res.json(POST);
             } else {
-                const POSTS = await Post.find({}).populate("userId", {
+                const POSTS = await Post.find().populate("userId", {
                     _id: 1,
                     user_Name: 1,
                     image_profil: 1,
