@@ -20,7 +20,7 @@ module.exports = {
         try {
             if(!req.body.email) res.status(400).send(Message_Error_Auth_User);
             const user = await Profile.findOne({ email: req.body.email })
-
+            if(!user) return res.status(404).json({message: "no se encontro el usuario"});
             const token = jwt.sign({
                 userName: user.email,
                 id: user._id,
