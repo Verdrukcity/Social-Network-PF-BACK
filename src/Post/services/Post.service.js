@@ -76,11 +76,12 @@ module.exports = {
                 //We save the post on the DB
                 const POST = await Post.create(data);
 
-                const newProfile = await Profile.findById(id);
-                await newProfile.content.push(POST._id);
-                await newProfile.save();
+                let newProfile = await Profile.findById(id);
+                // await newProfile._doc.content.push(POST._id);
+                // await newProfile.save();
+                    newProfile = await Profile.findOneAndUpdate({_id: id}, {content: [...newProfile._doc.content, POST._id]});
 
-                res.status(200).json({
+                const config = {
                     message: Message_Create_Post,
                     data: { ...POST._doc },
                     data_Type: multimed.type,
@@ -89,7 +90,8 @@ module.exports = {
                         user_Name: newProfile.user_Name,
                         image_profil: newProfile.image_profil,
                     },
-                });
+                }
+                res.status(200).json(config);
             } else {
                 throw Error(Message_Imcomplete_Create_Post);
             }

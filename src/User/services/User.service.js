@@ -100,7 +100,7 @@ module.exports = {
             if (id) {
                 let id1 = mongoose.Types.ObjectId(id);
 
-                var newProfile = await Profile.findById(id).select([
+                let newProfile = await Profile.findById(id).select([
                     "user_Name",
                     "_id",
                     "image_profil",
@@ -108,9 +108,11 @@ module.exports = {
                     "content",
                     "followers",
                     "follow",
+                    "auth0",
                 ]);
-
-                newProfile = await Profile.aggregate([
+                
+                if(!newProfile._doc.auth0) {
+                newProfile= await Profile.aggregate([
                     {
                         $match: { _id: id1 },
                     },
@@ -136,9 +138,26 @@ module.exports = {
                     {
                         $project: { content: 0 },
                     },
-                ]);
+                ]);} else {
+                    newProfile = await Profile.aggregate([
+                        {
+                            $match: { _id: id1 },
+                        },
+                        {
+                            $lookup: {
+                                from: "posts",
+                                localField: "content",
+                                foreignField: "_id",
+                                as: "contents",
+                            },
+                        },
+                        {
+                            $project: { content: 0 },
+                        },
+                    ])
+                }
 
-                res.status(200).send(newProfile[0]);
+                res.status(200).send(newProfile[0] || newProfile);
             } else {
                 res.status(400).json({ message: Message_Error_Create_User });
             }

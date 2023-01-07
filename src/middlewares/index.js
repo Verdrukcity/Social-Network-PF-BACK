@@ -11,7 +11,6 @@ const verifyToken = (req, res, next) => {
 	if (!token) return res.status(401).json({ error: Message_Error_Access })
 	try {
 		const verified = jwt.verify(token, process.env.TOKEN_SECRET)
-		req.user = verified
 		if(verified.status) {
 			next() // vamos a la siguente ruta
 		} else {
