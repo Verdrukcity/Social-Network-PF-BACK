@@ -57,6 +57,10 @@ const Message_Error_Username = "Username no definido.";
 const Message_Error_Image_Profile = "Imagen de perfil no definida.";
 const Message_Error_Password = "Contraseña no definida.";
 
+///// Admin
+const Message_Admin_Activo = "Activo.";
+const Message_Admin_Inactivo = "Inactivo.";
+const Message_Error_Admin = "No se encontro referencia";
 module.exports = {
     Message_Create_Category,
     Message_Error_Create_Category,
@@ -99,4 +103,7 @@ module.exports = {
     Message_Error_Username,
     Message_Error_Image_Profile,
     Message_Error_Password,
+    Message_Admin_Activo,
+    Message_Admin_Inactivo,
+    Message_Error_Admin
 };
