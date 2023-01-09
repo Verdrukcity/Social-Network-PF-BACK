@@ -81,6 +81,10 @@ const PROFILE = new Schema({
     userStripe: {
         type: String,
     },
+    auth0: {
+        type: Boolean,
+        default: false
+    }
 });
 
 //Mensaje personalizado para avisar cual es el problema
