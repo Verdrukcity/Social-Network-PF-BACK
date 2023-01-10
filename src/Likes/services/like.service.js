@@ -55,16 +55,16 @@ module.exports = {
                     const newLike = await Like.create(req.body);
                     otroPost.likes.push(newLike._id);
                     otroPost.save();
-                    console.log({gurda : 'ok'})
+                    console.log({guarda : 'ok'})
                     return res.send("Like add");
                 } else {
                     await Like.findByIdAndDelete(likeMap._id);
 
-                    indexLike = newPost.likes.findIndex(like => like.usersLiked !== findUser._id);
+                    // indexLike = newPost.likes.findIndex(like => like.usersLiked !== findUser._id);
 
-                    newPost.likes.splice(indexLike,1)
+                    // newPost.likes.splice(indexLike,1)
                     
-                    newPost.save()
+                    // newPost.save()
                     console.log({borra : 'delete'})
                     return res.send("Post unliked succesfully");
                 }
