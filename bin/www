@@ -3,6 +3,9 @@
 /**
  * Module dependencies.
  */
+const mongoose = require('mongoose');
+require('dotenv').config()
+const { mongodb } = process.env;
 
 var app = require('../app');
 var debug = require('debug')('socialnetworkpf-back:server');
@@ -11,9 +14,9 @@ var http = require('http');
 /**
  * Get port from environment and store in Express.
  */
-
-var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
+
+var port = normalizePort(process.env.PORT || '3001');
 
 /**
  * Create HTTP server.
@@ -24,11 +27,18 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+mongoose.set('strictQuery', false)
+mongoose.connect(mongodb)
+.then(()=>{
+  server.listen(port);
+  server.on('error', onError);
+  server.on('listening', onListening);
+})
+.catch(err => console.log(err.message))
 
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+mongoose.connection.on("open", ()=> console.log("DB conections success"))
 
+//↑ shows if the conection was succesfull
 /**
  * Normalize a port into a number, string, or false.
  */
