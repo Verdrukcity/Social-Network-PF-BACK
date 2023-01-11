@@ -26,5 +26,51 @@ module.exports = {
         }catch(error){
             throw Error(error.message)
         }
+    },
+    succesPaymentMail: async (mailReceiver) => {
+        try{
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false,
+                auth: {
+                user: REPLYGMAIL, 
+                pass: REPLYGMAILPASS, 
+                },
+            });
+            
+            await transporter.sendMail({
+            from: '"Reply" <social.reply.team@gmail.com>', 
+            to: mailReceiver, 
+            subject: "Pago efectuado con éxito!", 
+            text: "Success payment confirmation", 
+            html: `<h1>Gracias por colaborar con la comunidad!</h1><br/><h3>Tu donación se ha realizado correctamente!</h3><br/><br>Equipo de Reply ;)</br>`,
+            });
+        }catch(error){
+            throw Error(error.message)
+        }
+    },
+    failedPaymentMail: async (mailReceiver) => {
+        try{
+            let transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                secure: false,
+                auth: {
+                user: REPLYGMAIL, 
+                pass: REPLYGMAILPASS, 
+                },
+            });
+            
+            await transporter.sendMail({
+            from: '"Reply" <social.reply.team@gmail.com>', 
+            to: mailReceiver, 
+            subject: "Pago defectuoso.", 
+            text: "Failed payment notification", 
+            html: `<h1>Algo ha salido mal.</h1><br/><h3>Lo sentimos, pero tu donación no se ha podido realizar correctamente.</h3><br/><br>Equipo de Reply ;)</br>`,
+            });
+        }catch(error){
+            throw Error(error.message)
+        }
     }
 }
