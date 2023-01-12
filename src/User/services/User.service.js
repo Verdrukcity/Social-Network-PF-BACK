@@ -211,18 +211,18 @@ module.exports = {
                 /*{
                     $match: req.query, // puede buscar por query la refrencia, si no tiene qury llegaran todos los profiles
                 },*/ // la ruta es user - no puede tener la ruta sucia si no va a buscar  los profile
-                {
-                    // si la ruta llega asi - /user?name='', manda un error ojoooo
-                    $lookup: {
-                        from: "mapas",
-                        localField: "country",
-                        foreignField: "_id",
-                        as: "country",
-                    },
-                },
-                {
-                    $unwind: "$country",
-                },
+                // {
+                //     // si la ruta llega asi - /user?name='', manda un error ojoooo
+                //     $lookup: {
+                //         from: "mapas",
+                //         localField: "country",
+                //         foreignField: "_id",
+                //         as: "country",
+                //     },
+                // },
+                // {
+                //     $unwind: "$country",
+                // },
                 {
                     $lookup: {
                         from: "posts",
