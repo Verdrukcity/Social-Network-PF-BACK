@@ -34,43 +34,44 @@ module.exports = {
             const otroPost = await Post.findById(id);
             if (!newPost) throw Error({ message: Message_Error_Add_Like });
 
-            const findUser = await Profile.findById(usersLiked)
-            if(!findUser) throw Error({message: "User not found"})
+            const findUser = await Profile.findById(usersLiked);
+            if (!findUser) throw Error({ message: "User not found" });
 
             if (!newPost.likes.length) {
                 const newLike = await Like.create(req.body);
                 otroPost.likes.push(newLike._id);
-                otroPost.save()
+                otroPost.save();
 
-              return  res.status(200).json({ message: Message_Add_Like });
+                return res.status(200).json({ message: Message_Add_Like });
             }
 
             const likeMap = newPost.likes.find((like) => {
-                // const findUser = await Profile.findById(like.usersLiked);
-                //console.log(like.usersLiked.equals(findUser._id));
-                return findUser._id.equals(like.usersLiked) === true
+                return findUser._id.equals(like.usersLiked) === true;
             });
 
-            if(!likeMap){
-                    const newLike = await Like.create(req.body);
-                    otroPost.likes.push(newLike._id);
-                    otroPost.save();
-                    console.log({guarda : 'ok'})
-                    return res.send("Like add");
-                } else {
-                    await Like.findByIdAndDelete(likeMap._id);
+            if (!likeMap) {
+                const newLike = await Like.create(req.body);
+                console.log(newLike)
+                otroPost.likes.push(usersLiked);
+                otroPost.save();
+                return res.send("Like add");
+            } else {
+                let likeRef = { ...likeMap };
+                const responselike = await Like.findByIdAndDelete(likeRef._doc._id);
+                let findDiferent = newPost.likes?.filter(
+                    (like) => {
+                        if(like.usersLiked.toString() !== responselike.usersLiked.toString()){
+                            return like.usersLiked
+                        }
+                    }
+                );
+                Post.findOne({_id: id}, (err, doc) => {
+                    doc.likes = findDiferent;
+                    doc.save();
+                });
+                return res.status(200).send("Post unliked succesfully");
+            }
 
-                    // indexLike = newPost.likes.findIndex(like => like.usersLiked !== findUser._id);
-
-                    // newPost.likes.splice(indexLike,1)
-                    
-                    // newPost.save()
-                    console.log({borra : 'delete'})
-                    return res.send("Post unliked succesfully");
-                }
-                //return findUser
-
-            // res.status(200).json({ message: Message_Add_Like });
         } catch (error) {
             res.status(400).send({ message: error.message });
         }
