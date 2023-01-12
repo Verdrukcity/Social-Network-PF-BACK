@@ -51,7 +51,6 @@ module.exports = {
 
             if (!likeMap) {
                 const newLike = await Like.create(req.body);
-                console.log(newLike)
                 otroPost.likes.push(usersLiked);
                 otroPost.save();
                 return res.send("Like add");
